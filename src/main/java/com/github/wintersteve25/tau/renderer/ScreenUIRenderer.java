@@ -3,6 +3,7 @@ package com.github.wintersteve25.tau.renderer;
 import com.github.wintersteve25.tau.theme.MinecraftTheme;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -13,20 +14,19 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ScreenUIRenderer extends Screen {
-    
+
     private final UIComponent uiComponent;
     private final List<Renderable> components;
     private final List<Renderable> tooltips;
     private final List<DynamicUIComponent> dynamicUIComponents;
     private final boolean renderBackground;
     private final Theme theme;
-    
+
     private boolean built;
-    
+
     public ScreenUIRenderer(UIComponent uiComponent, boolean renderBackground, Theme theme) {
         super(Component.empty());
         this.uiComponent = uiComponent;
@@ -36,11 +36,11 @@ public class ScreenUIRenderer extends Screen {
         this.tooltips = new ArrayList<>();
         this.dynamicUIComponents = new ArrayList<>();
     }
-    
+
     public ScreenUIRenderer(UIComponent uiComponent, boolean renderBackground) {
         this(uiComponent, renderBackground, MinecraftTheme.INSTANCE);
     }
-    
+
     public ScreenUIRenderer(UIComponent uiComponent) {
         this(uiComponent, true);
     }
@@ -53,7 +53,7 @@ public class ScreenUIRenderer extends Screen {
         tooltips.clear();
         dynamicUIComponents.clear();
         UIBuilder.build(layout, theme, uiComponent, components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children());
-        
+
         built = true;
     }
 
@@ -68,22 +68,22 @@ public class ScreenUIRenderer extends Screen {
         for (DynamicUIComponent dynamicUIComponent : dynamicUIComponents) {
             dynamicUIComponent.destroy();
         }
-        
+
         super.onClose();
     }
 
     @Override
-    public void render(PoseStack PoseStack, int pMouseX, int pMouseY, float pPartialTicks) {
+    public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTicks) {
         if (renderBackground) {
-            this.renderBackground(PoseStack);
+            this.renderBackground(graphics, pMouseX, pMouseY, pPartialTicks);
         }
-        
+
         for (Renderable component : components) {
-            component.render(PoseStack, pMouseX, pMouseY, pPartialTicks);
+            component.render(graphics, pMouseX, pMouseY, pPartialTicks);
         }
-        
+
         for (Renderable tooltip : tooltips) {
-            tooltip.render(PoseStack, pMouseX, pMouseY, pPartialTicks);
+            tooltip.render(graphics, pMouseX, pMouseY, pPartialTicks);
         }
     }
 }

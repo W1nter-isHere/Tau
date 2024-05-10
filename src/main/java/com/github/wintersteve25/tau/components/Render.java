@@ -8,7 +8,7 @@ import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.RenderProvider;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public final class Render implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         int width = layout.getWidth();
         int height = layout.getHeight();
         int x = layout.getPosition(Axis.HORIZONTAL, width);
         int y = layout.getPosition(Axis.VERTICAL, height);
-        renderables.add((pPoseStack, pMouseX, pMouseY, pPartialTicks) -> renderer.render(pPoseStack, pMouseX, pMouseY, pPartialTicks, x, y, width, height));
+        renderables.add((guiGraphics, pMouseX, pMouseY, pPartialTicks) -> renderer.render(guiGraphics, pMouseX, pMouseY, pPartialTicks, x, y, width, height));
         return layout.getSize();
     }
 }

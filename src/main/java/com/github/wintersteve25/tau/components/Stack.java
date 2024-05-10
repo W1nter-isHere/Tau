@@ -8,7 +8,7 @@ import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,11 +26,11 @@ public final class Stack implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         for (UIComponent child : children) {
             UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
         }
-        
+
         return layout.getSize();
     }
 }

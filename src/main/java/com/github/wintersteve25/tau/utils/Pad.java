@@ -12,9 +12,9 @@ public class Pad {
         this.left = left;
         this.right = right;
     }
-    
-    public Vector2i getSize() {
-        return new Vector2i(left + right, top + bottom);
+
+    public SimpleVec2i getSize() {
+        return new SimpleVec2i(left + right, top + bottom);
     }
 
     public static final class Builder {
@@ -25,7 +25,7 @@ public class Pad {
 
         public Builder() {
         }
-        
+
         public Builder top(int top) {
             this.top = top;
             return this;
@@ -45,7 +45,7 @@ public class Pad {
             this.right = right;
             return this;
         }
-        
+
         public Builder all(int amount) {
             this.top = amount;
             this.bottom = amount;

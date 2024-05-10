@@ -11,48 +11,48 @@ import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public final class Row implements PrimitiveUIComponent {
-    
+
     private final Iterable<UIComponent> children;
     private final int spacing;
     private final FlexSizeBehaviour sizeBehaviour;
     private final LayoutSetting alignment;
-    
+
     public Row(int spacing, FlexSizeBehaviour sizeBehaviour, Iterable<UIComponent> children, LayoutSetting alignment) {
         this.children = children;
         this.spacing = spacing;
         this.sizeBehaviour = sizeBehaviour;
         this.alignment = alignment;
     }
-    
+
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
-        
-        Vector2i size;
-        
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+
+        SimpleVec2i size;
+
         if (sizeBehaviour == FlexSizeBehaviour.MIN) {
-            size = Vector2i.zero();
+            size = SimpleVec2i.zero();
 
             for (UIComponent child : children) {
-                Vector2i childSize = UIBuilder.build(layout.copy(), theme, child, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                SimpleVec2i childSize = UIBuilder.build(layout.copy(), theme, child, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
                 size.x += childSize.x + spacing;
                 size.y = Math.max(size.y, childSize.y);
             }
         } else {
-            size = new Vector2i(layout.getWidth(), layout.getHeight());
+            size = new SimpleVec2i(layout.getWidth(), layout.getHeight());
         }
 
         Layout childrenLayout = new Layout(size.x, size.y, layout.getPosition(Axis.HORIZONTAL, size.x), layout.getPosition(Axis.VERTICAL, size.y));
         childrenLayout.pushLayoutSetting(Axis.VERTICAL, alignment);
-        
+
         for (UIComponent child : children) {
-            Vector2i childSize = UIBuilder.build(childrenLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+            SimpleVec2i childSize = UIBuilder.build(childrenLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
             childrenLayout.pushOffset(Axis.HORIZONTAL, childSize.x + spacing);
         }
 
@@ -67,7 +67,7 @@ public final class Row implements PrimitiveUIComponent {
 
         public Builder() {
         }
-        
+
         public Builder withSpacing(int spacing) {
             this.spacing = spacing;
             return this;
@@ -77,7 +77,7 @@ public final class Row implements PrimitiveUIComponent {
             this.sizeBehaviour = horizontalSizeBehaviour;
             return this;
         }
-        
+
         public Builder withAlignment(LayoutSetting alignment) {
             this.alignment = alignment;
             return this;

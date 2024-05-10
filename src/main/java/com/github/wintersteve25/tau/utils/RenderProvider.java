@@ -1,8 +1,8 @@
 package com.github.wintersteve25.tau.utils;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 
 @FunctionalInterface
 public interface RenderProvider {
-    void render(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks, int x, int y, int width, int height);
+    void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, int x, int y, int width, int height);
 }

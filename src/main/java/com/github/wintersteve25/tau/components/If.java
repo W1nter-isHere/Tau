@@ -6,14 +6,14 @@ import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
 
 import java.util.List;
 
 public class If implements PrimitiveUIComponent {
-    
+
     private final boolean condition;
     private final UIComponent child;
 
@@ -23,8 +23,8 @@ public class If implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         if (condition) return UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
-        return Vector2i.zero();
+        return SimpleVec2i.zero();
     }
 }

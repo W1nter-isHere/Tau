@@ -1,32 +1,32 @@
 package com.github.wintersteve25.tau.utils;
 
-public class Vector2i {
+public class SimpleVec2i {
     public int x;
     public int y;
 
-    public Vector2i(int x, int y) {
+    public SimpleVec2i(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    
-    public void add(Vector2i other) {
+
+    public void add(SimpleVec2i other) {
         this.x += other.x;
         this.y += other.y;
     }
-    
-    public Vector2i addNew(Vector2i other) {
-        return new Vector2i(x + other.x, y + other.y);
+
+    public SimpleVec2i addNew(SimpleVec2i other) {
+        return new SimpleVec2i(x + other.x, y + other.y);
     }
 
-    public boolean outside(Vector2i other) {
+    public boolean outside(SimpleVec2i other) {
         return x > other.x || y > other.y;
     }
 
-    public static Vector2i zero() {
-        return new Vector2i(0, 0);
+    public static SimpleVec2i zero() {
+        return new SimpleVec2i(0, 0);
     }
-    
-    public static boolean within(int mouseX, int mouseY, Vector2i position, Vector2i size) {
+
+    public static boolean within(int mouseX, int mouseY, SimpleVec2i position, SimpleVec2i size) {
         return mouseX > position.x && mouseX < position.x + size.x && mouseY > position.y && mouseY < position.y + size.y;
     }
 

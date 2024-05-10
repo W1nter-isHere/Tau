@@ -11,7 +11,7 @@ import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.Size;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.List;
 
@@ -26,16 +26,16 @@ public final class Sized implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
-        Vector2i componentSize = size.get(layout.getSize());
-        
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+        SimpleVec2i componentSize = size.get(layout.getSize());
+
         if (componentSize.outside(layout.getSize())) {
             Tau.LOGGER.error("Sized UIComponent has a size greater than the amount of size available");
             return layout.getSize();
         }
-        
+
         Layout childLayout = new Layout(
-                componentSize.x, 
+                componentSize.x,
                 componentSize.y,
                 layout.getPosition(Axis.HORIZONTAL, componentSize.x),
                 layout.getPosition(Axis.VERTICAL, componentSize.y));

@@ -11,7 +11,7 @@ import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,27 +32,27 @@ public final class Column implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
 
-        Vector2i size;
+        SimpleVec2i size;
 
         if (sizeBehaviour == FlexSizeBehaviour.MIN) {
-            size = Vector2i.zero();
+            size = SimpleVec2i.zero();
 
             for (UIComponent child : children) {
-                Vector2i childSize = UIBuilder.build(layout.copy(), theme, child, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                SimpleVec2i childSize = UIBuilder.build(layout.copy(), theme, child, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
                 size.y += childSize.y + spacing;
                 size.x = Math.max(size.x, childSize.x);
             }
         } else {
-            size = new Vector2i(layout.getWidth(), layout.getHeight());
+            size = new SimpleVec2i(layout.getWidth(), layout.getHeight());
         }
 
         Layout childrenLayout = new Layout(size.x, size.y, layout.getPosition(Axis.HORIZONTAL, size.x), layout.getPosition(Axis.VERTICAL, size.y));
         childrenLayout.pushLayoutSetting(Axis.HORIZONTAL, alignment);
-        
+
         for (UIComponent child : children) {
-            Vector2i childSize = UIBuilder.build(childrenLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+            SimpleVec2i childSize = UIBuilder.build(childrenLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
             childrenLayout.pushOffset(Axis.VERTICAL, childSize.y + spacing);
         }
 

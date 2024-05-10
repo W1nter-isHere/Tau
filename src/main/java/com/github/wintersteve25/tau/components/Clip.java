@@ -12,63 +12,63 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.Size;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Clip implements PrimitiveUIComponent {
-    
+
     private final UIComponent child;
-    private final Vector2i offset;
+    private final SimpleVec2i offset;
     private final Size size;
-    
-    public Clip(UIComponent child, Vector2i offset, Size size) {
+
+    public Clip(UIComponent child, SimpleVec2i offset, Size size) {
         this.child = child;
         this.offset = offset;
         this.size = size;
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
 
         List<Renderable> childrenRenderables = new ArrayList<>();
-        Vector2i childSize = UIBuilder.build(layout, theme, child, childrenRenderables, tooltips, dynamicUIComponents, eventListeners);
+        SimpleVec2i childSize = UIBuilder.build(layout, theme, child, childrenRenderables, tooltips, dynamicUIComponents, eventListeners);
 
         Window window = Minecraft.getInstance().getWindow();
 
-        Vector2i scaledClipSize = size.get(childSize);
-        Vector2i scaledPosition = layout.getPosition(childSize);
+        SimpleVec2i scaledClipSize = size.get(childSize);
+        SimpleVec2i scaledPosition = layout.getPosition(childSize);
         scaledPosition.add(offset);
-        
+
         double guiScale = window.getGuiScale();
 
         int glX = (int) (scaledPosition.x * guiScale);
         int glY = (int) ((window.getGuiScaledHeight() - (scaledPosition.y + scaledClipSize.y)) * guiScale);
         int glWidth = (int) (scaledClipSize.x * guiScale);
         int glHeight = (int) (scaledClipSize.y * guiScale);
-        
-        renderables.add((pPoseStack, pMouseX, pMouseY, pPartialTicks) -> {
+
+        renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
             RenderSystem.enableScissor(glX, glY, glWidth, glHeight);
 
             for (Renderable renderable : childrenRenderables) {
-                renderable.render(pPoseStack, pMouseX, pMouseY, pPartialTicks);
+                renderable.render(graphics, pMouseX, pMouseY, pPartialTicks);
             }
-        
-            RenderSystem.disableScissor(); 
+
+            RenderSystem.disableScissor();
         });
-        
+
         return childSize;
     }
 
     public static final class Builder {
-        private Vector2i offset;
+        private SimpleVec2i offset;
         private Size size;
 
         public Builder() {
         }
 
-        public Builder withOffset(Vector2i offset) {
+        public Builder withOffset(SimpleVec2i offset) {
             this.offset = offset;
             return this;
         }
@@ -79,7 +79,7 @@ public final class Clip implements PrimitiveUIComponent {
         }
 
         public Clip build(UIComponent child) {
-            return new Clip(child, offset == null ? Vector2i.zero() : offset, size == null ? Size.percentage(1f) : size);
+            return new Clip(child, offset == null ? SimpleVec2i.zero() : offset, size == null ? Size.percentage(1f) : size);
         }
     }
 }

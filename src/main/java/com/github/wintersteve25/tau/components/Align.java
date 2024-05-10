@@ -10,16 +10,16 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.List;
 
 public final class Align implements PrimitiveUIComponent {
-    
+
     private final UIComponent child;
     private final LayoutSetting horizontal;
     private final LayoutSetting vertical;
-    
+
     public Align(UIComponent child, LayoutSetting horizontal, LayoutSetting vertical) {
         this.child = child;
         this.horizontal = horizontal;
@@ -27,7 +27,7 @@ public final class Align implements PrimitiveUIComponent {
     }
 
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         if (horizontal != null) {
             layout.pushLayoutSetting(Axis.HORIZONTAL, horizontal);
         }
@@ -36,16 +36,16 @@ public final class Align implements PrimitiveUIComponent {
             layout.pushLayoutSetting(Axis.VERTICAL, vertical);
         }
 
-        Vector2i size = UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+        SimpleVec2i size = UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
 
-        if (horizontal != null) {        
+        if (horizontal != null) {
             layout.popLayoutSetting(Axis.HORIZONTAL);
         }
 
         if (vertical != null) {
             layout.popLayoutSetting(Axis.VERTICAL);
         }
-        
+
         return size;
     }
 

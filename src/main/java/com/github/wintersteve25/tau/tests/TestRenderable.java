@@ -10,8 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 public class TestRenderable implements UIComponent {
     @Override
     public UIComponent build(Layout layout, Theme theme) {
-        return new RenderableComponent(((pPoseStack, pMouseX, pMouseY, pPartialTicks) -> {
-            Screen.fill(pPoseStack, 0, 0, pMouseX, pMouseY, Color.WHITE.getAARRGGBB());
+        return new RenderableComponent(((graphics, pMouseX, pMouseY, pPartialTicks) -> {
+            graphics.fill(0, 0, pMouseX, pMouseY, Color.WHITE.getAARRGGBB());
         }));
     }
 }

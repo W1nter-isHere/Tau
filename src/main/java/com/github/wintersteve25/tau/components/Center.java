@@ -10,28 +10,28 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
-import com.github.wintersteve25.tau.utils.Vector2i;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
 import java.util.List;
 
 public final class Center implements PrimitiveUIComponent {
-    
+
     private final UIComponent child;
-    
+
     public Center(UIComponent child) {
         this.child = child;
     }
-    
+
     @Override
-    public Vector2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         layout.pushLayoutSetting(Axis.HORIZONTAL, LayoutSetting.CENTER);
         layout.pushLayoutSetting(Axis.VERTICAL, LayoutSetting.CENTER);
 
-        Vector2i size = UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+        SimpleVec2i size = UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
 
         layout.popLayoutSetting(Axis.HORIZONTAL);
         layout.popLayoutSetting(Axis.VERTICAL);
-    
+
         return size;
     }
 }

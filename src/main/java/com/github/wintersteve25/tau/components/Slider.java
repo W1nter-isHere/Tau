@@ -4,12 +4,12 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.gui.widget.ForgeSlider;
+import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 
 import java.util.function.Consumer;
 
 public final class Slider implements UIComponent {
-    
+
     private final Component prefix;
     private final Component suffix;
     private final float stepSize;
@@ -37,8 +37,8 @@ public final class Slider implements UIComponent {
     public UIComponent build(Layout layout, Theme theme) {
         return new WidgetWrapper(new SliderWidget(prefix, suffix, stepSize, decimalPlaces, minimum, maximum, value, onPress, onValueChanged));
     }
-    
-    private static final class SliderWidget extends ForgeSlider {
+
+    private static final class SliderWidget extends ExtendedSlider {
         private final Runnable onPress;
         private final Consumer<Double> onValueChange;
 
@@ -92,7 +92,7 @@ public final class Slider implements UIComponent {
             this.stepSize = stepSize;
             return this;
         }
-        
+
         public Builder withValue(double value) {
             this.value = value;
             return this;
@@ -122,12 +122,12 @@ public final class Slider implements UIComponent {
             return new Slider(
                     prefix == null ? Component.empty() : prefix,
                     suffix == null ? Component.empty() : suffix,
-                    stepSize, 
-                    decimalPlaces, 
-                    value, 
-                    minimum, 
-                    maximum, 
-                    onPress, 
+                    stepSize,
+                    decimalPlaces,
+                    value,
+                    minimum,
+                    maximum,
+                    onPress,
                     onValueChanged
             );
         }

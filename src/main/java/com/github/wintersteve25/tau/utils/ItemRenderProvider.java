@@ -5,8 +5,8 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -33,8 +33,8 @@ public class ItemRenderProvider implements RenderProvider {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, int x, int y, int width, int height) {
-        renderItemStackInGui(poseStack, itemStack, x, y, width, height);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, int x, int y, int width, int height) {
+        renderItemStackInGui(graphics.pose(), itemStack, x, y, width, height);
     }
 
     private static void renderItemStackInGui(PoseStack poseStack, ItemStack stackToRender, int x, int y, int width, int height) {

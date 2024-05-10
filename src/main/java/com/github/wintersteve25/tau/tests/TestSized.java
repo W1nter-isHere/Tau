@@ -12,9 +12,9 @@ import com.github.wintersteve25.tau.utils.Size;
 public class TestSized implements UIComponent {
     @Override
     public UIComponent build(Layout layout, Theme theme) {
-        return new Sized(
+        return new Center(new Sized(
                 Size.percentage(0.2f, 0.05f),
                 new Button.Builder().build(new Center(new Text.Builder("Hello")))
-        );
+        ));
     }
 }

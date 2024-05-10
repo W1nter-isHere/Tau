@@ -11,7 +11,7 @@ public class TestTooltip implements UIComponent {
     public UIComponent build(Layout layout, Theme theme) {
         return new Center(
             new Tooltip.Builder()
-                .withText(Component.literal("Test"))
+                .withComponent(Component.literal("Test"))
                 .build(new Text.Builder("HALLO!"))
         );
     }

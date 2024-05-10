@@ -9,14 +9,12 @@ import java.util.ListIterator;
 
 public class StringAlignUtils extends Format {
 
-    private static final long serialVersionUID = 1L;
-
     public enum Alignment {
         LEFT, CENTER, RIGHT,
     }
 
-    private Alignment currentAlignment;
-    private int maxChars;
+    private final Alignment currentAlignment;
+    private final int maxChars;
 
     public StringAlignUtils(int maxChars, Alignment align) {
         switch (align) {
@@ -77,7 +75,7 @@ public class StringAlignUtils extends Format {
     public String format(String s) {
         return format(s, new StringBuffer(), null).toString();
     }
-    
+
     public Object parseObject(String source, ParsePosition pos) {
         return source;
     }
