@@ -1,27 +1,24 @@
 package com.github.wintersteve25.tau.components;
 
-import com.github.wintersteve25.tau.theme.Theme;
-import com.github.wintersteve25.tau.utils.Transformation;
-import net.minecraft.client.gui.components.events.ContainerEventHandler;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.components.Renderable;
+import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
-import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
-import com.github.wintersteve25.tau.build.UIBuilder;
+import com.github.wintersteve25.tau.theme.Theme;
+import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-import org.jetbrains.annotations.Nullable;
+import com.github.wintersteve25.tau.utils.Transformation;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-public final class ListView extends DynamicUIComponent implements PrimitiveUIComponent, ContainerEventHandler {
+public final class ListView extends DynamicUIComponent implements PrimitiveUIComponent, GuiEventListener {
 
     private static final int scrollSensitivity = 8;
 
@@ -31,84 +28,51 @@ public final class ListView extends DynamicUIComponent implements PrimitiveUICom
 
     private int scrollOffset;
     private int maxScroll;
-    private SimpleVec2i position;
-    private SimpleVec2i size;
-    private List<GuiEventListener> childrenEventHandlers;
 
-    private boolean drag;
-    private GuiEventListener focused;
+    private SimpleVec2i size;
+    private SimpleVec2i position;
+
+    private boolean focus;
 
     public ListView(List<UIComponent> children, LayoutSetting childrenAlignment, int spacing) {
         this.children = children;
         this.childrenAlignment = childrenAlignment;
         this.spacing = spacing;
         scrollOffset = 0;
-        this.childrenEventHandlers = new ArrayList<>();
     }
 
     @Override
     public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
         size = layout.getSize();
         position = layout.getPosition(size);
-        childrenEventHandlers.clear();
 
-        int childrenHeight = 0;
-        Layout childrenLayout = new Layout(size.x, size.y, position.x, position.y);
-        childrenLayout.pushLayoutSetting(Axis.HORIZONTAL, childrenAlignment);
-        List<Renderable> childrenRenderables = new ArrayList<>();
+        Column.Builder column = new Column.Builder()
+                .withSpacing(spacing)
+                .withAlignment(childrenAlignment);
 
-        for (UIComponent child : children) {
-            SimpleVec2i childSize = UIBuilder.build(childrenLayout, theme, child, childrenRenderables, tooltips, dynamicUIComponents, childrenEventHandlers);
-            childrenHeight += childSize.y;
-            childrenLayout.pushOffset(Axis.VERTICAL, childSize.y + spacing);
-        }
-
-        maxScroll = childrenHeight - size.y;
+        // TODO is there a way to avoid building it again?
+        SimpleVec2i childrenSize = UIBuilder.build(layout.copy(), theme, column.build(children), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        maxScroll = childrenSize.y - size.y;
 
         return UIBuilder.build(
-            layout,
-            theme,
-            new Clip.Builder()
-                .build(new Transform(new RenderableComponent((graphics, pMouseX, pMouseY, pPartialTicks) -> {
-                    for (Renderable renderable : childrenRenderables) {
-                        renderable.render(graphics, pMouseX, pMouseY, pPartialTicks);
-                    }
-                }), Transformation.translate(new Vector3f(0, scrollOffset, 0)))),
-            renderables,
-            tooltips,
-            dynamicUIComponents,
-            eventListeners
+                layout,
+                theme,
+                new Clip.Builder().build(new Transform(column.withSizeBehaviour(FlexSizeBehaviour.MAX).build(children), Transformation.translate(new Vector3f(0, scrollOffset, 0)))),
+                renderables,
+                tooltips,
+                dynamicUIComponents,
+                eventListeners
         );
-    }
-
-    @Override
-    public List<? extends GuiEventListener> children() {
-        return childrenEventHandlers;
-    }
-
-    @Override
-    public boolean isDragging() {
-        return drag;
-    }
-
-    @Override
-    public void setDragging(boolean pIsDragging) {
-        drag = pIsDragging;
     }
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
         if (scrollOffset >= maxScroll && pScrollY < 0) {
-            return ContainerEventHandler.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
+            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
         }
 
         if (scrollOffset >= 0 && pScrollY > 0) {
-            return ContainerEventHandler.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
-        }
-
-        Optional<GuiEventListener> childAt = getChildAt(pMouseX, pMouseY);
-        if (childAt.isPresent() && childAt.get().mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY)) {
-            return true;
+            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
         }
 
         scrollOffset += pScrollY > 0 ? scrollSensitivity : -scrollSensitivity;
@@ -118,20 +82,19 @@ public final class ListView extends DynamicUIComponent implements PrimitiveUICom
         return true;
     }
 
-    @Nullable
-    @Override
-    public GuiEventListener getFocused() {
-        return focused;
-    }
-
-    @Override
-    public void setFocused(@Nullable GuiEventListener pFocused) {
-        focused = pFocused;
-    }
-
     @Override
     public boolean isMouseOver(double pMouseX, double pMouseY) {
         return SimpleVec2i.within((int) pMouseX, (int) pMouseY, position, size);
+    }
+
+    @Override
+    public void setFocused(boolean pFocused) {
+        focus = pFocused;
+    }
+
+    @Override
+    public boolean isFocused() {
+        return focus;
     }
 
     private int clamp(int x, int min, int max) {
