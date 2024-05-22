@@ -40,7 +40,7 @@ public class HudUIRenderer {
 
         components.clear();
         dynamicUIComponents.clear();
-        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, new ArrayList<>(), dynamicUIComponents, new ArrayList<>()));
+        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, new ArrayList<>(), dynamicUIComponents, new ArrayList<>(), new ArrayList<>()));
 
         built = true;
     }

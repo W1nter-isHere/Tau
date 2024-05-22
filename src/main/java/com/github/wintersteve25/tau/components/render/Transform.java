@@ -43,8 +43,10 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
     public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         List<Renderable> children = new ArrayList<>();
+        List<SimpleVec2i> slots = new ArrayList<>();
+        
         childrenEventListeners.clear();
-        BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners, );
+        BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners, slots);
 
         SimpleVec2i size = UIBuilder.build(layout, theme, child, innerContext);
 
@@ -64,6 +66,14 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
 
             poseStack.popPose();
         });
+        
+        for (SimpleVec2i slot : slots) {
+            for (Transformation transformation : transformations) {
+                transformation.transformPoint(slot);
+            }
+            
+            context.slots().add(slot);
+        }
 
         return size;
     }

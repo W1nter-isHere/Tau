@@ -7,6 +7,7 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.MinecraftTheme;
 import com.github.wintersteve25.tau.theme.Theme;
+import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class MenuUIRenderer extends AbstractContainerScreen<MenuUIRenderer.Menu>
     private final List<Renderable> components;
     private final List<Renderable> tooltips;
     private final List<DynamicUIComponent> dynamicUIComponents;
+    private final List<SimpleVec2i> slots;
+    
     private final boolean renderBackground;
     private final Theme theme;
     private boolean built;
@@ -40,6 +44,7 @@ public class MenuUIRenderer extends AbstractContainerScreen<MenuUIRenderer.Menu>
         this.components = new ArrayList<>();
         this.tooltips = new ArrayList<>();
         this.dynamicUIComponents = new ArrayList<>();
+        this.slots = new ArrayList<>();
     }
 
     public MenuUIRenderer(Menu pMenu, Inventory pPlayerInventory, UIComponent uiComponent, boolean renderBackground) {
@@ -57,7 +62,9 @@ public class MenuUIRenderer extends AbstractContainerScreen<MenuUIRenderer.Menu>
         components.clear();
         tooltips.clear();
         dynamicUIComponents.clear();
-        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children()));
+        slots.clear();
+        
+        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children(), slots));
 
         built = true;
     }
