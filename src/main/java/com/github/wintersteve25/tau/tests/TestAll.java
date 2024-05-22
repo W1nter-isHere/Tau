@@ -1,7 +1,13 @@
 package com.github.wintersteve25.tau.tests;
 
-import com.github.wintersteve25.tau.components.*;
 import com.github.wintersteve25.tau.components.base.UIComponent;
+import com.github.wintersteve25.tau.components.layout.Align;
+import com.github.wintersteve25.tau.components.layout.Center;
+import com.github.wintersteve25.tau.components.layout.Stack;
+import com.github.wintersteve25.tau.components.interactable.Button;
+import com.github.wintersteve25.tau.components.interactable.ListView;
+import com.github.wintersteve25.tau.components.utils.Sized;
+import com.github.wintersteve25.tau.components.utils.Text;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
 import com.github.wintersteve25.tau.renderer.ScreenUIRenderer;
@@ -39,7 +45,7 @@ public class TestAll implements UIComponent {
                 new TestButton(new TestWidgetWrapper())
             );
     }
-    
+
     private static final class TestButton implements UIComponent {
 
         private final UIComponent screen;
@@ -58,7 +64,7 @@ public class TestAll implements UIComponent {
             );
         }
     }
-    
+
     private static final class TestScreen implements UIComponent {
 
         private final UIComponent screen;

@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.interactable;
 
+import com.github.wintersteve25.tau.components.utils.WidgetWrapper;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -32,19 +33,19 @@ public final class TextField implements UIComponent {
     public UIComponent build(Layout layout, Theme theme) {
         return new WidgetWrapper(new TextFieldWidget(message, hintText, onChange, validator, formatter));
     }
-    
+
     private static final class TextFieldWidget extends net.minecraft.client.gui.components.EditBox {
         public TextFieldWidget(Component message, Component hintText, Consumer<String> onChange, Predicate<String> validator, BiFunction<String, Integer, FormattedCharSequence> formatter) {
             super(Minecraft.getInstance().font, 0, 0, 0, 0, message);
             if (validator != null) setFilter(validator);
             if (hintText != null) setSuggestion(hintText.getString());
             if (formatter != null) setFormatter(formatter);
-            
+
             setResponder(text -> {
                 if (onChange != null) {
                     onChange.accept(text);
                 }
-                
+
                 if (!text.isEmpty()) {
                     setSuggestion("");
                 } else {

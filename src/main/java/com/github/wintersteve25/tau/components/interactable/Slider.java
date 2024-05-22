@@ -1,6 +1,7 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.interactable;
 
 import com.github.wintersteve25.tau.components.base.UIComponent;
+import com.github.wintersteve25.tau.components.utils.WidgetWrapper;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.network.chat.Component;

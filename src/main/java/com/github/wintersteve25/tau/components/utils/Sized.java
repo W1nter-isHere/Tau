@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
@@ -26,7 +27,7 @@ public final class Sized implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         SimpleVec2i componentSize = size.get(layout.getSize());
 
         if (componentSize.outside(layout.getSize())) {
@@ -40,7 +41,7 @@ public final class Sized implements PrimitiveUIComponent {
                 layout.getPosition(Axis.HORIZONTAL, componentSize.x),
                 layout.getPosition(Axis.VERTICAL, componentSize.y));
 
-        UIBuilder.build(childLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+        UIBuilder.build(childLayout, theme, child, context);
         return componentSize;
     }
 }

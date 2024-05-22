@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
@@ -23,8 +24,8 @@ public class If implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
-        if (condition) return UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
+        if (condition) return UIBuilder.build(layout, theme, child, context);
         return SimpleVec2i.zero();
     }
 }

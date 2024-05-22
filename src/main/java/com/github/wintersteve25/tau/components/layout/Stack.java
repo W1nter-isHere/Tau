@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.layout;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
@@ -26,9 +27,9 @@ public final class Stack implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         for (UIComponent child : children) {
-            UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+            UIBuilder.build(layout, theme, child, context);
         }
 
         return layout.getSize();

@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.interactable;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
@@ -34,14 +35,14 @@ public final class Button implements PrimitiveUIComponent, GuiEventListener {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext buildContext) {
         width = layout.getWidth();
         height = layout.getHeight();
         x = layout.getPosition(Axis.HORIZONTAL, width);
         y = layout.getPosition(Axis.VERTICAL, height);
 
-        renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> theme.drawButton(graphics, x, y, width, height, pPartialTicks, pMouseX, pMouseY, this.getInteractableState(pMouseX, pMouseY)));
-        UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+        buildContext.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> theme.drawButton(graphics, x, y, width, height, pPartialTicks, pMouseX, pMouseY, this.getInteractableState(pMouseX, pMouseY)));
+        UIBuilder.build(layout, theme, child, buildContext);
 
         return layout.getSize();
     }

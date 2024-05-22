@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -28,22 +29,19 @@ public final class Container implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         if (child == null && !drawBackground) {
             return layout.getSize();
         }
 
         SimpleVec2i size = layout.getSize();
-        List<Renderable> renderables1 = new ArrayList<>();
-        List<Renderable> tooltips1 = new ArrayList<>();
-        List<DynamicUIComponent> dynamicUIComponents1 = new ArrayList<>();
-        List<GuiEventListener> eventListeners1 = new ArrayList<>();
+        BuildContext innerContext = new BuildContext();
 
         if (child != null) {
             if (sizeBehaviour == FlexSizeBehaviour.MIN) {
-                size = UIBuilder.build(layout, theme, child, renderables1, tooltips1, dynamicUIComponents1, eventListeners1);
+                size = UIBuilder.build(layout, theme, child, innerContext);
             } else {
-                UIBuilder.build(layout, theme, child, renderables1, tooltips1, dynamicUIComponents1, eventListeners1);
+                UIBuilder.build(layout, theme, child, innerContext);
             }
         }
 
@@ -52,15 +50,10 @@ public final class Container implements PrimitiveUIComponent {
             int height = size.y;
             int x = layout.getPosition(Axis.HORIZONTAL, width);
             int y = layout.getPosition(Axis.VERTICAL, height);
-
-            renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> theme.drawContainer(graphics, x, y, width, height, pPartialTicks, pMouseX, pMouseY));
+            context.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> theme.drawContainer(graphics, x, y, width, height, pPartialTicks, pMouseX, pMouseY));
         }
 
-        renderables.addAll(renderables1);
-        tooltips.addAll(tooltips1);
-        dynamicUIComponents.addAll(dynamicUIComponents1);
-        eventListeners.addAll(eventListeners1);
-
+        context.addAll(innerContext);
         return size;
     }
 

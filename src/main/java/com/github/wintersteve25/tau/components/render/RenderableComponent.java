@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.render;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
@@ -19,8 +20,8 @@ public final class RenderableComponent implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
-        renderables.add(renderable);
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
+        context.renderables().add(renderable);
         return layout.getSize();
     }
 }

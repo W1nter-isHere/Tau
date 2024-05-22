@@ -1,9 +1,13 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.interactable;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
+import com.github.wintersteve25.tau.components.layout.Column;
+import com.github.wintersteve25.tau.components.render.Transform;
+import com.github.wintersteve25.tau.components.utils.Clip;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
 import com.github.wintersteve25.tau.theme.Theme;
@@ -42,7 +46,7 @@ public final class ListView extends DynamicUIComponent implements PrimitiveUICom
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         size = layout.getSize();
         position = layout.getPosition(size);
 
@@ -51,17 +55,14 @@ public final class ListView extends DynamicUIComponent implements PrimitiveUICom
                 .withAlignment(childrenAlignment);
 
         // TODO is there a way to avoid building it again?
-        SimpleVec2i childrenSize = UIBuilder.build(layout.copy(), theme, column.build(children), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        maxScroll = childrenSize.y - size.y;
+        SimpleVec2i childrenSize = UIBuilder.build(layout.copy(), theme, column.build(children), new BuildContext());
+        maxScroll = childrenSize.y - size.y + 1; // 1 for padding
 
         return UIBuilder.build(
                 layout,
                 theme,
                 new Clip.Builder().build(new Transform(column.withSizeBehaviour(FlexSizeBehaviour.MAX).build(children), Transformation.translate(new Vector3f(0, scrollOffset, 0)))),
-                renderables,
-                tooltips,
-                dynamicUIComponents,
-                eventListeners
+                context
         );
     }
 

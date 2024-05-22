@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.render;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.ComponentPath;
@@ -45,14 +46,15 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         List<Renderable> children = new ArrayList<>();
         childrenEventListeners.clear();
+        BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners);
 
-        SimpleVec2i size = UIBuilder.build(layout, theme, child, children, tooltips, dynamicUIComponents, childrenEventListeners);
+        SimpleVec2i size = UIBuilder.build(layout, theme, child, innerContext);
 
-        renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
+        context.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
             SimpleVec2i mousePos = new SimpleVec2i(pMouseX, pMouseY);
             PoseStack poseStack = graphics.pose();
             poseStack.pushPose();

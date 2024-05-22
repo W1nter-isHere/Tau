@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -21,14 +22,14 @@ public final class WidgetWrapper implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         child.setWidth(layout.getWidth());
         child.setHeight(layout.getHeight());
         child.setX(layout.getPosition(Axis.HORIZONTAL, child.getWidth()));
         child.setY(layout.getPosition(Axis.VERTICAL, child.getHeight()));
 
-        renderables.add(child);
-        eventListeners.add(child);
+        context.renderables().add(child);
+        context.eventListeners().add(child);
 
         return layout.getSize();
     }

@@ -1,7 +1,7 @@
 package com.github.wintersteve25.tau.tests;
 
-import com.github.wintersteve25.tau.components.Align;
-import com.github.wintersteve25.tau.components.Text;
+import com.github.wintersteve25.tau.components.layout.Align;
+import com.github.wintersteve25.tau.components.utils.Text;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;

@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.layout;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -32,7 +33,7 @@ public final class Column implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         SimpleVec2i size;
 
@@ -40,7 +41,8 @@ public final class Column implements PrimitiveUIComponent {
             size = SimpleVec2i.zero();
 
             for (UIComponent child : children) {
-                SimpleVec2i childSize = UIBuilder.build(layout.copy(), theme, child, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                // todo avoid building twice?
+                SimpleVec2i childSize = UIBuilder.build(layout.copy(), theme, child, new BuildContext());
                 size.y += childSize.y + spacing;
                 size.x = Math.max(size.x, childSize.x);
             }
@@ -52,7 +54,7 @@ public final class Column implements PrimitiveUIComponent {
         childrenLayout.pushLayoutSetting(Axis.HORIZONTAL, alignment);
 
         for (UIComponent child : children) {
-            SimpleVec2i childSize = UIBuilder.build(childrenLayout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+            SimpleVec2i childSize = UIBuilder.build(childrenLayout, theme, child, context);
             childrenLayout.pushOffset(Axis.VERTICAL, childSize.y + spacing);
         }
 

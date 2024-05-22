@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
@@ -25,9 +26,9 @@ public final class Padding implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         if (pad == null) {
-            return UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+            return UIBuilder.build(layout, theme, child, context);
         }
 
         if (pad.left == 0 || pad.right == 0) {
@@ -44,7 +45,7 @@ public final class Padding implements PrimitiveUIComponent {
             layout.pushSizeMod(Axis.VERTICAL, - pad.bottom - pad.top);
         }
 
-        SimpleVec2i size = UIBuilder.build(layout, theme, child, renderables, tooltips, dynamicUIComponents, eventListeners);
+        SimpleVec2i size = UIBuilder.build(layout, theme, child, context);
 
         layout.popOffset(Axis.VERTICAL);
         layout.popOffset(Axis.HORIZONTAL);

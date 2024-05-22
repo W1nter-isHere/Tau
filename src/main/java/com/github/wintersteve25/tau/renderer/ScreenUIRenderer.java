@@ -1,8 +1,8 @@
 package com.github.wintersteve25.tau.renderer;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.MinecraftTheme;
 import com.github.wintersteve25.tau.theme.Theme;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -24,7 +24,6 @@ public class ScreenUIRenderer extends Screen {
     private final List<DynamicUIComponent> dynamicUIComponents;
     private final boolean renderBackground;
     private final Theme theme;
-
     private boolean built;
 
     public ScreenUIRenderer(UIComponent uiComponent, boolean renderBackground, Theme theme) {
@@ -52,7 +51,7 @@ public class ScreenUIRenderer extends Screen {
         components.clear();
         tooltips.clear();
         dynamicUIComponents.clear();
-        UIBuilder.build(layout, theme, uiComponent, components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children());
+        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children()));
 
         built = true;
     }
@@ -60,7 +59,7 @@ public class ScreenUIRenderer extends Screen {
     @Override
     public void tick() {
         if (!built) return;
-        UIBuilder.rebuildDynamics(dynamicUIComponents);
+        UIBuilder.rebuildAndTickDynamicUIComponents(dynamicUIComponents);
     }
 
     @Override

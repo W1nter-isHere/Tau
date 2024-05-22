@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -30,10 +31,11 @@ public final class Clip implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         List<Renderable> childrenRenderables = new ArrayList<>();
-        SimpleVec2i childSize = UIBuilder.build(layout, theme, child, childrenRenderables, tooltips, dynamicUIComponents, eventListeners);
+        BuildContext innerContext = new BuildContext(childrenRenderables, context.tooltips(), context.dynamicUIComponents(), context.eventListeners());
+        SimpleVec2i childSize = UIBuilder.build(layout, theme, child, innerContext);
 
         Window window = Minecraft.getInstance().getWindow();
 
@@ -48,7 +50,7 @@ public final class Clip implements PrimitiveUIComponent {
         int glWidth = (int) (scaledClipSize.x * guiScale);
         int glHeight = (int) (scaledClipSize.y * guiScale);
 
-        renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
+        context.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
             RenderSystem.enableScissor(glX, glY, glWidth, glHeight);
 
             for (Renderable renderable : childrenRenderables) {

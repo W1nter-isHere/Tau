@@ -1,6 +1,8 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
+import com.github.wintersteve25.tau.components.render.Render;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.RenderProvider;
 
@@ -37,7 +39,7 @@ public final class Text implements PrimitiveUIComponent, RenderProvider {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
         color = color == null ? theme.getTextColor() : color;
 
         Font fontRenderer = Minecraft.getInstance().font;
@@ -58,16 +60,13 @@ public final class Text implements PrimitiveUIComponent, RenderProvider {
 
         int finalWidth = width;
         if (overflowBehaviour != OverflowBehaviour.CLIP) {
-            renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> render(graphics, pMouseX, pMouseY, pPartialTicks, x, y, finalWidth, height));
+            context.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> render(graphics, pMouseX, pMouseY, pPartialTicks, x, y, finalWidth, height));
         } else {
             UIBuilder.build(
                     new Layout(width, height, x, y),
                     theme,
                     new Clip.Builder().build(new Render(this)),
-                    renderables,
-                    tooltips,
-                    dynamicUIComponents,
-                    eventListeners
+                    context
             );
         }
 

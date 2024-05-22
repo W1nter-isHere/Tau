@@ -7,7 +7,7 @@ Description: Rendering screen
 java.lang.UnsupportedOperationException: null
 	at java.util.ImmutableCollections.uoe(ImmutableCollections.java:142) ~[?:?] {}
 	at java.util.ImmutableCollections$AbstractImmutableCollection.addAll(ImmutableCollections.java:148) ~[?:?] {}
-	at com.github.wintersteve25.tau.components.Tooltip.lambda$build$0(Tooltip.java:49) ~[main/:?] {re:classloading}
+	at com.github.wintersteve25.tau.components.utils.Tooltip.lambda$build$0(Tooltip.java:49) ~[main/:?] {re:classloading}
 	at com.github.wintersteve25.tau.renderer.ScreenUIRenderer.render(ScreenUIRenderer.java:86) ~[main/:?] {re:classloading}
 	at net.minecraft.client.gui.screens.Screen.renderWithTooltip(Screen.java:106) ~[neoforge-20.4.234.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.neoforged.neoforge.client.ClientHooks.drawScreenInternal(ClientHooks.java:399) ~[neoforge-20.4.234.jar:?] {re:classloading}
@@ -42,7 +42,7 @@ Thread: Render thread
 Stacktrace:
 	at java.util.ImmutableCollections.uoe(ImmutableCollections.java:142) ~[?:?] {}
 	at java.util.ImmutableCollections$AbstractImmutableCollection.addAll(ImmutableCollections.java:148) ~[?:?] {}
-	at com.github.wintersteve25.tau.components.Tooltip.lambda$build$0(Tooltip.java:49) ~[%23183!/:?] {re:classloading}
+	at com.github.wintersteve25.tau.components.utils.Tooltip.lambda$build$0(Tooltip.java:49) ~[%23183!/:?] {re:classloading}
 	at com.github.wintersteve25.tau.renderer.ScreenUIRenderer.render(ScreenUIRenderer.java:86) ~[%23183!/:?] {re:classloading}
 	at net.minecraft.client.gui.screens.Screen.renderWithTooltip(Screen.java:106) ~[neoforge-20.4.234.jar%23182!/:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
 	at net.neoforged.neoforge.client.ClientHooks.drawScreenInternal(ClientHooks.java:399) ~[neoforge-20.4.234.jar%23181%23184!/:?] {re:classloading}
@@ -148,20 +148,20 @@ Details:
 	Virtual memory used (MB): 11376.73
 	Swap memory total (MB): 0.00
 	Swap memory used (MB): 0.00
-	JVM Flags: 0 total; 
+	JVM Flags: 0 total;
 	Launched Version: 20.4.234
 	Backend library: LWJGL version 3.3.2+13
 	Backend API: AMD Radeon RX 5700 XT (radeonsi, navi10, LLVM 17.0.6, DRM 3.57, 6.8.7-arch1-1) GL version 4.6 (Core Profile) Mesa 24.0.5-arch1.1, AMD
 	Window size: 1920x1080
 	GL Caps: Using framebuffer using OpenGL 3.2
-	GL debug messages: 
+	GL debug messages:
 	Using VBOs: Yes
 	Is Modded: Definitely; Client brand changed to 'neoforge'; Server brand changed to 'neoforge'
 	Universe: 400921fb54442d18
 	Type: Integrated Server (map_client.txt)
 	Graphics mode: fancy
 	Render Distance: 12/12 chunks
-	Resource Packs: 
+	Resource Packs:
 	Current Language: en_us
 	Locale: en_US
 	CPU: 8x Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz
@@ -173,20 +173,20 @@ Details:
 	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
 	ModLauncher launch target: forgeclientuserdev
 	ModLauncher naming: mcp
-	ModLauncher services: 
-		sponge-mixin-0.13.1+mixin.0.8.5.jar mixin PLUGINSERVICE 
-		loader-2.0.17.jar slf4jfixer PLUGINSERVICE 
-		loader-2.0.17.jar runtime_enum_extender PLUGINSERVICE 
-		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
-		loader-2.0.17.jar runtimedistcleaner PLUGINSERVICE 
-		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
-		modlauncher-10.0.9.jar mixin-synthetic-package TRANSFORMATIONSERVICE 
-		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
-	FML Language Providers: 
+	ModLauncher services:
+		sponge-mixin-0.13.1+mixin.0.8.5.jar mixin PLUGINSERVICE
+		loader-2.0.17.jar slf4jfixer PLUGINSERVICE
+		loader-2.0.17.jar runtime_enum_extender PLUGINSERVICE
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE
+		loader-2.0.17.jar runtimedistcleaner PLUGINSERVICE
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE
+		modlauncher-10.0.9.jar mixin-synthetic-package TRANSFORMATIONSERVICE
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE
+	FML Language Providers:
 		javafml@2.0
 		lowcodefml@2.0
 		minecraft@2.0
-	Mod List: 
+	Mod List:
 		neoforge-20.4.234.jar                             |Minecraft                     |minecraft                     |1.20.4              |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
 		main                                              |Tau                           |tau                           |2.0.0               |DONE      |Manifest: NOSIGNATURE
 		                                                  |NeoForge                      |neoforge                      |20.4.234            |DONE      |Manifest: NOSIGNATURE

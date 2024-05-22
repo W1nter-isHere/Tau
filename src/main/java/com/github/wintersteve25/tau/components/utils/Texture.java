@@ -1,5 +1,6 @@
-package com.github.wintersteve25.tau.components;
+package com.github.wintersteve25.tau.components.utils;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.Minecraft;
@@ -30,12 +31,12 @@ public final class Texture implements PrimitiveUIComponent {
     }
 
     @Override
-    public SimpleVec2i build(Layout layout, Theme theme, List<Renderable> renderables, List<Renderable> tooltips, List<DynamicUIComponent> dynamicUIComponents, List<GuiEventListener> eventListeners) {
+    public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         Minecraft minecraft = Minecraft.getInstance();
         SimpleVec2i position = layout.getPosition(uvSize);
 
-        renderables.add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
+        context.renderables().add((graphics, pMouseX, pMouseY, pPartialTicks) -> {
             graphics.blit(textureLocation, position.x, position.y, size.x, size.y, uv.x, uv.y, uvSize.x, uvSize.y,
                     textureSize.x,
                     textureSize.y);

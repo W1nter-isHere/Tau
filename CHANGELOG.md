@@ -6,6 +6,9 @@
 - `Transformation` is no longer an interface but a class
 - Added `scale` and `translate` methods to the Transform class to replace `ScaleTransform` and `TranslationTransform`
 - `Transform` component will now also transform inputs given to the children components
+- `PrimitiveComponent#build` will now take in a `BuildContext` instead of lists
+- Added `ClientTooltipPositioner` parameter to `Tooltip`
 
 ## Internal Changes
 - `ListView` no longer scrolls per child component and instead scrolls by a fixed amount
+- `DynamicUIComponent` no longer exposes dangerous fields

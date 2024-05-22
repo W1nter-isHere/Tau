@@ -1,5 +1,6 @@
 package com.github.wintersteve25.tau.renderer;
 
+import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
@@ -39,15 +40,14 @@ public class HudUIRenderer {
 
         components.clear();
         dynamicUIComponents.clear();
-
-        UIBuilder.build(layout, theme, uiComponent, components, new ArrayList<>(), dynamicUIComponents, new ArrayList<>());
+        UIBuilder.build(layout, theme, uiComponent, new BuildContext(components, new ArrayList<>(), dynamicUIComponents, new ArrayList<>()));
 
         built = true;
     }
 
     public void tick() {
         if (!built) return;
-        UIBuilder.rebuildDynamics(dynamicUIComponents);
+        UIBuilder.rebuildAndTickDynamicUIComponents(dynamicUIComponents);
     }
 
     public void render(Window mainWindow, GuiGraphics graphics, float pPartialTicks) {
