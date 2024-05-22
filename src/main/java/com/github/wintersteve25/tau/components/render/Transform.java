@@ -29,11 +29,10 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
 
     private final UIComponent child;
     private final Iterable<Transformation> transformations;
+    private final List<GuiEventListener> childrenEventListeners;
 
     private boolean dragging;
     private GuiEventListener focused;
-
-    private List<GuiEventListener> childrenEventListeners;
 
     public Transform(UIComponent child, Transformation... transformations) {
         this(child, Arrays.asList(transformations));

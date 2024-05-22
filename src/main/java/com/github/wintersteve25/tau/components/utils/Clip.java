@@ -5,6 +5,7 @@ import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
@@ -14,27 +15,36 @@ import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.Size;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public final class Clip implements PrimitiveUIComponent {
+public final class Clip implements PrimitiveUIComponent, ContainerEventHandler {
 
     private final UIComponent child;
     private final SimpleVec2i offset;
     private final Size size;
+    private final List<GuiEventListener> childrenEventListeners;
+
+    private boolean dragging;
+    private GuiEventListener focused;
 
     public Clip(UIComponent child, SimpleVec2i offset, Size size) {
         this.child = child;
         this.offset = offset;
         this.size = size;
+        this.childrenEventListeners = new ArrayList<>();
+        this.dragging = false;
     }
 
     @Override
     public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
+        childrenEventListeners.clear();
         List<Renderable> childrenRenderables = new ArrayList<>();
-        BuildContext innerContext = new BuildContext(childrenRenderables, context.tooltips(), context.dynamicUIComponents(), context.eventListeners());
+        BuildContext innerContext = new BuildContext(childrenRenderables, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners);
         SimpleVec2i childSize = UIBuilder.build(layout, theme, child, innerContext);
 
         Window window = Minecraft.getInstance().getWindow();
@@ -61,6 +71,32 @@ public final class Clip implements PrimitiveUIComponent {
         });
 
         return childSize;
+    }
+
+    @Override
+    public List<? extends GuiEventListener> children() {
+        return childrenEventListeners;
+    }
+
+    @Override
+    public boolean isDragging() {
+        return dragging;
+    }
+
+    @Override
+    public void setDragging(boolean pIsDragging) {
+        dragging = pIsDragging;
+    }
+
+    @Nullable
+    @Override
+    public GuiEventListener getFocused() {
+        return focused;
+    }
+
+    @Override
+    public void setFocused(@Nullable GuiEventListener pFocused) {
+        focused = pFocused;
     }
 
     public static final class Builder {
