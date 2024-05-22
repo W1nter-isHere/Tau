@@ -3,22 +3,17 @@ package com.github.wintersteve25.tau.components.render;
 import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
-import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import com.github.wintersteve25.tau.utils.Transformation;
-import net.minecraft.client.gui.navigation.FocusNavigationEvent;
-import net.minecraft.client.gui.navigation.ScreenRectangle;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2d;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +44,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
 
         List<Renderable> children = new ArrayList<>();
         childrenEventListeners.clear();
-        BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners);
+        BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners, );
 
         SimpleVec2i size = UIBuilder.build(layout, theme, child, innerContext);
 
@@ -60,7 +55,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
 
             for (Transformation transformation : transformations) {
                 transformation.transform(poseStack);
-                transformation.transformMousePos(mousePos);
+                transformation.transformPoint(mousePos);
             }
 
             for (Renderable renderable : children) {
@@ -104,7 +99,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
-            transformation.transformMousePos(mousePos);
+            transformation.transformPoint(mousePos);
         }
 
         return ContainerEventHandler.super.getChildAt(mousePos.x, mousePos.y);
@@ -115,7 +110,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
-            transformation.transformMousePos(mousePos);
+            transformation.transformPoint(mousePos);
         }
 
         return ContainerEventHandler.super.mouseClicked(mousePos.x, mousePos.y, pButton);
@@ -126,7 +121,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
-            transformation.transformMousePos(mousePos);
+            transformation.transformPoint(mousePos);
         }
 
         return ContainerEventHandler.super.mouseReleased(mousePos.x, mousePos.y, pButton);
@@ -137,7 +132,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
-            transformation.transformMousePos(mousePos);
+            transformation.transformPoint(mousePos);
         }
 
         return ContainerEventHandler.super.mouseDragged(mousePos.x, mousePos.y, pButton, pDragX, pDragY);
@@ -148,7 +143,7 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
-            transformation.transformMousePos(mousePos);
+            transformation.transformPoint(mousePos);
         }
 
         return ContainerEventHandler.super.mouseScrolled(mousePos.x, mousePos.y, pScrollX, pScrollY);

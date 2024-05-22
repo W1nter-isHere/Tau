@@ -19,7 +19,7 @@ public class Transformation {
         poseStack.mulPoseMatrix(transform);
     }
 
-    public void transformMousePos(SimpleVec2i pos) {
+    public void transformPoint(SimpleVec2i pos) {
         // Apply the inverted translation to the mouse position
         Vector3f transformedPos = new Vector3f(pos.x, pos.y, 0.0f); // Convert to 3D for matrix multiplication
         transformedPos.mulPosition(inverted);
@@ -29,7 +29,7 @@ public class Transformation {
         pos.y = (int) Math.floor(transformedPos.y);
     }
 
-    public void transformMousePos(Vector2d pos) {
+    public void transformPoint(Vector2d pos) {
         Vector3f transformedPos = new Vector3f((float) pos.x, (float) pos.y, 0.0f);
         transformedPos.mulPosition(inverted);
         pos.x = transformedPos.x;
