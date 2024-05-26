@@ -53,26 +53,6 @@ configurations {
 }
 
 repositories {
-    // JEI
-    maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
-
-    // JEI Backup
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
-
-    // Geckolib
-    maven {
-        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-        content {
-            includeGroup("software.bernie.geckolib")
-        }
-    }
-
     mavenLocal()
 }
 
