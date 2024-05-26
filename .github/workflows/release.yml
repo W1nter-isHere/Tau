@@ -1,19 +1,19 @@
-name: Build and Release for 1.19
+name: Build and Release for 1.20
 
 on:
   push:
-    branches: [ 1.19-release ]
+    branches: [ 1.20-release ]
 
 jobs:
   build:
     name: Builds and Release on Github and Saps
     uses: nanite/workflows/.github/workflows/standard-release.yml@v1
     with:
-      java-version: 17
+      java-version: 21
       curse-publish-task: ""
     secrets:
       saps-token: ${{ secrets.SAPS_TOKEN }}
-  
+
   publish:
     runs-on: ubuntu-latest
     needs: build
@@ -23,14 +23,14 @@ jobs:
         with:
           modrinth-id: MNBGnhBw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-  
+
           curseforge-id: 845405
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          
+
           files-primary: "./build/libs/*.jar"
           changelog-file: "./CHANGELOG.md"
-  
+
           loaders: forge
           game-versions: |
-            1.19.4
-          java: 17
+            1.20.6
+          java: 21
