@@ -1,6 +1,7 @@
 package com.github.wintersteve25.tau.components.render;
 
 import com.github.wintersteve25.tau.build.BuildContext;
+import com.github.wintersteve25.tau.menu.MenuSlot;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
@@ -43,8 +44,8 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
     public SimpleVec2i build(Layout layout, Theme theme, BuildContext context) {
 
         List<Renderable> children = new ArrayList<>();
-        List<SimpleVec2i> slots = new ArrayList<>();
-        
+        List<MenuSlot<?>> slots = new ArrayList<>();
+
         childrenEventListeners.clear();
         BuildContext innerContext = new BuildContext(children, context.tooltips(), context.dynamicUIComponents(), childrenEventListeners, slots);
 
@@ -66,12 +67,12 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
 
             poseStack.popPose();
         });
-        
-        for (SimpleVec2i slot : slots) {
+
+        for (MenuSlot<?> slot : slots) {
             for (Transformation transformation : transformations) {
-                transformation.transformPoint(slot);
+                transformation.transformPoint(slot.pos());
             }
-            
+
             context.slots().add(slot);
         }
 

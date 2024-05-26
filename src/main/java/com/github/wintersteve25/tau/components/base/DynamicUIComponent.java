@@ -1,8 +1,8 @@
 package com.github.wintersteve25.tau.components.base;
 
 import com.github.wintersteve25.tau.build.BuildContext;
+import com.github.wintersteve25.tau.menu.MenuSlot;
 import com.github.wintersteve25.tau.theme.Theme;
-import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
 import com.github.wintersteve25.tau.layout.Layout;
@@ -22,7 +22,7 @@ public abstract class DynamicUIComponent implements UIComponent {
     private DynamicChange<Renderable> tooltips;
     private DynamicChange<DynamicUIComponent> dynamicUIComponents;
     private DynamicChange<GuiEventListener> eventListeners;
-    private DynamicChange<SimpleVec2i> slots;
+    private DynamicChange<MenuSlot<?>> slots;
 
     public boolean dirty;
 
@@ -41,7 +41,7 @@ public abstract class DynamicUIComponent implements UIComponent {
         List<Renderable> replacementTooltips = new ArrayList<>();
         List<DynamicUIComponent> replacementDynamicUIComponents = new ArrayList<>();
         List<GuiEventListener> replacementEventListeners = new ArrayList<>();
-        List<SimpleVec2i> replacementSlots = new ArrayList<>();
+        List<MenuSlot<?>> replacementSlots = new ArrayList<>();
 
         UIBuilder.build(layout, theme, this, new BuildContext(replacementRenderables, replacementTooltips, replacementDynamicUIComponents, replacementEventListeners, replacementSlots));
 

@@ -20,5 +20,7 @@ public interface Theme {
 
     void drawTooltip(GuiGraphics graphics, int mouseX, int mouseY, Font font, List<ClientTooltipComponent> tooltips, Optional<ClientTooltipPositioner> positioner);
 
+    void drawSlot(GuiGraphics graphics, int x, int y);
+
     Color getTextColor();
 }

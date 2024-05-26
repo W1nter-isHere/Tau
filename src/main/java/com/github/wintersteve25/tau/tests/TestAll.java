@@ -19,31 +19,32 @@ public class TestAll implements UIComponent {
     @Override
     public UIComponent build(Layout layout, Theme theme) {
         return new ListView.Builder()
-            .withSpacing(2)
-            .build(
-                new TestButton(new TestAlign()),
-                new TestButton(new com.github.wintersteve25.tau.tests.TestButton()),
-                new TestButton(new TestCenter()),
-                new TestButton(new TestClip()),
-                new TestButton(new TestColumn()),
-                new TestButton(new TestContainer()),
-                new TestButton(new TestDynamic()),
-                new TestButton(new TestListView()),
-                new TestButton(new TestPadding()),
-                new TestButton(new TestPositioned()),
-                new TestButton(new TestRender()),
-                new TestButton(new TestRenderable()),
-                new TestButton(new TestRow()),
-                new TestButton(new TestSized()),
-                new TestButton(new TestSlider()),
-                new TestButton(new TestStack()),
-                new TestButton(new TestText()),
-                new TestButton(new TestTextField()),
-                new TestButton(new TestTexture()),
-                new TestButton(new TestTooltip()),
-                new TestButton(new TestTransform()),
-                new TestButton(new TestWidgetWrapper())
-            );
+                .withSpacing(2)
+                .build(
+                        new TestButton(new TestAlign()),
+                        new TestButton(new com.github.wintersteve25.tau.tests.TestButton()),
+                        new TestButton(new TestCenter()),
+                        new TestButton(new TestClip()),
+                        new TestButton(new TestColumn()),
+                        new TestButton(new TestContainer()),
+                        new TestButton(new TestDynamic()),
+                        new TestButton(new TestListView()),
+                        new TestButton(new TestPadding()),
+                        new TestButton(new TestPositioned()),
+                        new TestButton(new TestRender()),
+                        new TestButton(new TestRenderable()),
+                        new TestButton(new TestRow()),
+                        new TestButton(new TestSized()),
+                        new TestButton(new TestSlider()),
+                        new TestButton(new TestStack()),
+                        new TestButton(new TestText()),
+                        new TestButton(new TestTextField()),
+                        new TestButton(new TestTexture()),
+                        new TestButton(new TestTooltip()),
+                        new TestButton(new TestTransform()),
+                        new TestButton(new TestWidgetWrapper()),
+                        new TestButton(new TestInventoryVisual())
+                );
     }
 
     private static final class TestButton implements UIComponent {
@@ -59,8 +60,8 @@ public class TestAll implements UIComponent {
             return new Sized(
                     Size.staticSize(200, 20),
                     new Button.Builder()
-                    .withOnPress((button) -> Minecraft.getInstance().setScreen(new ScreenUIRenderer(new TestScreen(screen), true)))
-                    .build(new Center(new Text.Builder(screen.getClass().getSimpleName())))
+                            .withOnPress((button) -> Minecraft.getInstance().setScreen(new ScreenUIRenderer(new TestScreen(screen), true)))
+                            .build(new Center(new Text.Builder(screen.getClass().getSimpleName())))
             );
         }
     }
@@ -76,16 +77,16 @@ public class TestAll implements UIComponent {
         @Override
         public UIComponent build(Layout layout, Theme theme) {
             return new Stack(
-                screen,
-                new Align.Builder()
-                        .withHorizontal(LayoutSetting.START)
-                        .withVertical(LayoutSetting.START)
-                        .build(new Sized(
-                                Size.staticSize(60, 20),
-                                new Button.Builder()
-                                        .withOnPress((button) -> Minecraft.getInstance().setScreen(new ScreenUIRenderer(new TestAll(), true)))
-                                        .build(new Center(new Text.Builder("Back"))))
-                        )
+                    screen,
+                    new Align.Builder()
+                            .withHorizontal(LayoutSetting.START)
+                            .withVertical(LayoutSetting.START)
+                            .build(new Sized(
+                                    Size.staticSize(60, 20),
+                                    new Button.Builder()
+                                            .withOnPress((button) -> Minecraft.getInstance().setScreen(new ScreenUIRenderer(new TestAll(), true)))
+                                            .build(new Center(new Text.Builder("Back"))))
+                            )
             );
         }
     }

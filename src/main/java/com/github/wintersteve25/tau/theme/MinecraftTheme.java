@@ -20,6 +20,7 @@ public class MinecraftTheme implements Theme {
     public static final Theme INSTANCE = new MinecraftTheme();
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Tau.MOD_ID, "textures/gui/container.png");
+    private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation(Tau.MOD_ID, "textures/gui/slot.png");
     private static final Color TEXT = new Color(0xFFE8E8E8);
 
     @Override
@@ -39,6 +40,11 @@ public class MinecraftTheme implements Theme {
     @Override
     public void drawTooltip(GuiGraphics graphics, int mouseX, int mouseY, Font font, List<ClientTooltipComponent> tooltips, Optional<ClientTooltipPositioner> positioner) {
         renderTooltipInternal(graphics, font, tooltips, mouseX, mouseY, positioner.orElse(this::positionTooltip));
+    }
+
+    @Override
+    public void drawSlot(GuiGraphics graphics, int x, int y) {
+        graphics.blit(SLOT_TEXTURE, x, y, 0, 0, 18, 18, 18, 18);
     }
 
     // Copied from GuiGraphics

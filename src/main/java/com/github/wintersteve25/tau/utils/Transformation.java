@@ -16,7 +16,7 @@ public class Transformation {
     }
 
     public void transform(PoseStack poseStack) {
-        poseStack.mulPoseMatrix(transform);
+        poseStack.mulPose(transform);
     }
 
     public void transformPoint(SimpleVec2i pos) {

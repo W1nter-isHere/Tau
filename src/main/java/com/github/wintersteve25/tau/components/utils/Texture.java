@@ -12,6 +12,7 @@ import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
 
+import javax.transaction.xa.Xid;
 import java.util.List;
 
 public final class Texture implements PrimitiveUIComponent {
@@ -42,7 +43,7 @@ public final class Texture implements PrimitiveUIComponent {
                     textureSize.y);
         });
 
-        return uvSize;
+        return size;
     }
 
     public static final class Builder implements UIComponent {

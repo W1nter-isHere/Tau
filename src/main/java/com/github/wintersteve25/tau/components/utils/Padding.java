@@ -58,6 +58,6 @@ public final class Padding implements PrimitiveUIComponent {
             layout.popSizeMod(Axis.VERTICAL);
         }
 
-        return size;
+        return size.addNew(pad.getSize());
     }
 }
