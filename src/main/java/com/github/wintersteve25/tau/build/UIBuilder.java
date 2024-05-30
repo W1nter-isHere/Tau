@@ -22,7 +22,7 @@ public class UIBuilder {
         return build(layout, theme, uiComponent, context, SimpleVec2i.zero());
     }
 
-    // the size is the accumulated size of this component branch
+    // param size is the accumulated size of this component branch
     private static SimpleVec2i build(Layout layout, Theme theme, UIComponent uiComponent, BuildContext context, SimpleVec2i size) {
         if (uiComponent instanceof DynamicUIComponent dynamicUIComponent) {
             dynamicUIComponent.buildDynamic(context, layout.copy(), theme);

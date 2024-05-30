@@ -1,20 +1,30 @@
 package com.github.wintersteve25.tau.menu;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TauContainerMenu extends AbstractContainerMenu {
+public class TauContainerMenu extends AbstractContainerMenu implements ContainerListener {
 
-    public TauContainerMenu(@Nullable MenuType<?> pMenuType, Inventory playerInventory, int pContainerId) {
+    public final CompoundTag data;
+    public final Level level;
+    public final BlockPos pos;
+
+    public TauContainerMenu(@Nullable MenuType<?> pMenuType, Inventory playerInventory, int pContainerId, BlockPos pos) {
         super(pMenuType, pContainerId);
-        setupSlots(playerInventory);
-    }
 
-    public abstract void setupSlots(Inventory playerInventory);
+        this.data = new CompoundTag();
+        this.level = playerInventory.player.level();
+        this.pos = pos;
+
+        addSlotListener(this);
+    }
 
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
@@ -26,7 +36,13 @@ public abstract class TauContainerMenu extends AbstractContainerMenu {
         return true;
     }
 
+    @Override
+    public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
+    }
 
+    @Override
+    public void dataChanged(AbstractContainerMenu pContainerMenu, int pDataSlotIndex, int pValue) {
+    }
 
     public @NotNull Slot addSlot(@NotNull Slot pSlot) {
         return super.addSlot(pSlot);
