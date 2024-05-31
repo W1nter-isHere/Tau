@@ -33,6 +33,10 @@ public class TauMenuHolder {
         return inner.get();
     }
 
+    public UIMenu getMenu() {
+        return menu;
+    }
+
     public void registerScreen(RegisterMenuScreensEvent event) {
         menu.registerScreen(event, inner.get());
     }

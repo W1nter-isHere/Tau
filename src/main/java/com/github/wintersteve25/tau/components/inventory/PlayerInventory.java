@@ -3,6 +3,8 @@ package com.github.wintersteve25.tau.components.inventory;
 import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
+import com.github.wintersteve25.tau.menu.MenuSlot;
+import com.github.wintersteve25.tau.menu.handlers.PlayerInventoryHandler;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import net.minecraft.world.inventory.Slot;
@@ -16,6 +18,7 @@ public class PlayerInventory implements PrimitiveUIComponent {
 
         SimpleVec2i pos = layout.getPosition(SIZE);
 
+        context.slots().add(new MenuSlot<>(pos, new PlayerInventoryHandler()));
         context.renderables().add((pGuiGraphics, pMouseX, pMouseY, pPartialTick) -> {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 9; j++) {

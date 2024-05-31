@@ -11,8 +11,10 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -25,6 +27,28 @@ public interface UIMenu {
     UIComponent build(Layout layout, Theme theme, TauContainerMenu containerMenu);
 
     SimpleVec2i getSize();
+
+    default int getTopPos(Layout layout, int width, int height) {
+        return (height - layout.getHeight()) / 2;
+    }
+
+    default int getLeftPos(Layout layout, int width, int height) {
+        return (width - layout.getWidth()) / 2;
+    }
+
+    default void tick(TauContainerMenu menu) {
+    }
+
+    default void addDataSlots(TauContainerMenu menu) {
+    }
+
+    default ItemStack quickMoveStack(TauContainerMenu menu, Player player, int index) {
+        return null;
+    }
+
+    default boolean stillValid(TauContainerMenu menu, Player player) {
+        return true;
+    }
 
     default boolean shouldRenderBackground() {
         return true;
@@ -52,7 +76,7 @@ public interface UIMenu {
         Layout layout = new Layout(size.x, size.y);
         List<MenuSlot<?>> s = new ArrayList<>();
 
-        TauContainerMenu menu = new TauContainerMenu(menuHolder.get(), playerInv, containerId, pos);
+        TauContainerMenu menu = new TauContainerMenu(menuHolder, playerInv, containerId, pos);
         UIComponent uiComponent = this.build(layout, getTheme(), menu);
         UIBuilder.build(layout, getTheme(), uiComponent, new BuildContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), s));
 
@@ -60,6 +84,7 @@ public interface UIMenu {
             slot.handler().setupSync(menu, playerInv, slot.pos().x, slot.pos().y);
         }
 
+        addDataSlots(menu);
         return menu;
     }
 }
