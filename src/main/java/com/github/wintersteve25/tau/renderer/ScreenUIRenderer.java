@@ -74,7 +74,7 @@ public class ScreenUIRenderer extends Screen {
     @Override
     public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTicks) {
         if (renderBackground) {
-            this.renderBackground(graphics, pMouseX, pMouseY, pPartialTicks);
+            this.renderBackground(graphics);
         }
 
         for (Renderable component : components) {

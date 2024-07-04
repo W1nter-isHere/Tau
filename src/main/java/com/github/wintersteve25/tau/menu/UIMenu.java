@@ -13,12 +13,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +59,17 @@ public interface UIMenu {
         return MinecraftTheme.INSTANCE;
     }
 
-    default DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name, FeatureFlagSet featureFlagSet) {
-        return register.register(name, () -> IMenuTypeExtension.create((cid, inv, data) -> newMenu(menu, inv, cid, data.readBlockPos())));
+    default RegistryObject<MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name) {
+        return register.register(name, () -> IForgeMenuType.create((cid, inv, data) -> newMenu(menu, inv, cid, data.readBlockPos())));
     }
 
-    default void registerScreen(RegisterMenuScreensEvent event, MenuType<TauContainerMenu> menuType) {
-        event.register(menuType, new MenuScreens.ScreenConstructor<TauContainerMenu, TauContainerUI>() {
+    default void registerScreen(FMLClientSetupEvent event, MenuType<TauContainerMenu> menuType) {
+        event.enqueueWork(() -> MenuScreens.register(menuType, new MenuScreens.ScreenConstructor<TauContainerMenu, TauContainerUI>() {
             @Override
-            public TauContainerUI create(TauContainerMenu pMenu, Inventory pInventory, Component pTitle) {
-                return new TauContainerUI(pMenu, pInventory, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme());
+            public TauContainerUI create(TauContainerMenu t, Inventory inventory, Component component) {
+                return new TauContainerUI(t, inventory, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme());
             }
-        });
+        }));
     }
 
     default TauContainerMenu newMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {

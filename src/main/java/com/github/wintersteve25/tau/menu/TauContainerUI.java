@@ -57,7 +57,7 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
     @Override
     public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTicks) {
         if (renderBackground) {
-            this.renderBackground(graphics, pMouseX, pMouseY, pPartialTicks);
+            this.renderBackground(graphics);
         }
 
         PoseStack poseStack = graphics.pose();

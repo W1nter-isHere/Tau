@@ -5,7 +5,7 @@ import com.github.wintersteve25.tau.components.utils.WidgetWrapper;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
+import net.minecraftforge.client.gui.widget.ForgeSlider;
 
 import java.util.function.Consumer;
 
@@ -39,7 +39,7 @@ public final class Slider implements UIComponent {
         return new WidgetWrapper(new SliderWidget(prefix, suffix, stepSize, decimalPlaces, minimum, maximum, value, onPress, onValueChanged));
     }
 
-    private static final class SliderWidget extends ExtendedSlider {
+    private static final class SliderWidget extends ForgeSlider {
         private final Runnable onPress;
         private final Consumer<Double> onValueChange;
 

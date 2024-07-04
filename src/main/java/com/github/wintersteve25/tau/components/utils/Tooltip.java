@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.ClientHooks;
+import net.minecraftforge.client.ForgeHooksClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public final class Tooltip implements PrimitiveUIComponent {
 
         context.tooltips().add((pPoseStack, pMouseX, pMouseY, pPartialTicks) -> {
             if (SimpleVec2i.within(pMouseX, pMouseY, position.x - 1, position.y - 1, size.x + 1, size.y + 1)) {
-                List<ClientTooltipComponent> components = ClientHooks.gatherTooltipComponents(ItemStack.EMPTY, this.components, pMouseX, screenWidth, screenHeight, fontRenderer);
+                List<ClientTooltipComponent> components = ForgeHooksClient.gatherTooltipComponents(ItemStack.EMPTY, this.components, pMouseX, screenWidth, screenHeight, fontRenderer);
                 List<ClientTooltipComponent> all = new ArrayList<>(components.size() + clientComponents.size());
                 all.addAll(clientComponents);
                 all.addAll(components);

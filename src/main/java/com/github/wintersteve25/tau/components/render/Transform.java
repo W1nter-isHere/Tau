@@ -150,13 +150,13 @@ public final class Transform implements PrimitiveUIComponent, ContainerEventHand
     }
 
     @Override
-    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double scroll) {
         Vector2d mousePos = new Vector2d(pMouseX, pMouseY);
 
         for (Transformation transformation : transformations) {
             transformation.transformPoint(mousePos);
         }
 
-        return ContainerEventHandler.super.mouseScrolled(mousePos.x, mousePos.y, pScrollX, pScrollY);
+        return ContainerEventHandler.super.mouseScrolled(mousePos.x, mousePos.y, scroll);
     }
 }

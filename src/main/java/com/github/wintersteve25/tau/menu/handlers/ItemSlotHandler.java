@@ -2,8 +2,8 @@ package com.github.wintersteve25.tau.menu.handlers;
 
 import com.github.wintersteve25.tau.menu.TauContainerMenu;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class ItemSlotHandler implements ISlotHandler {
 

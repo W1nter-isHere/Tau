@@ -50,7 +50,7 @@ public class MinecraftTheme implements Theme {
     // Copied from GuiGraphics
     private void renderTooltipInternal(GuiGraphics graphics, Font pFont, List<ClientTooltipComponent> pComponents, int pMouseX, int pMouseY, ClientTooltipPositioner pTooltipPositioner) {
         if (!pComponents.isEmpty()) {
-            net.neoforged.neoforge.client.event.RenderTooltipEvent.Pre preEvent = net.neoforged.neoforge.client.ClientHooks.onRenderTooltipPre(ItemStack.EMPTY, graphics, pMouseX, pMouseY, graphics.guiWidth(), graphics.guiHeight(), pComponents, pFont, pTooltipPositioner);
+            net.minecraftforge.client.event.RenderTooltipEvent.Pre preEvent = net.minecraftforge.client.ForgeHooksClient.onRenderTooltipPre(ItemStack.EMPTY, graphics, pMouseX, pMouseY, graphics.guiWidth(), graphics.guiHeight(), pComponents, pFont, pTooltipPositioner);
             if (preEvent.isCanceled()) return;
             int i = 0;
             int j = pComponents.size() == 1 ? -2 : 0;
@@ -71,7 +71,7 @@ public class MinecraftTheme implements Theme {
             int i1 = vector2ic.y();
             graphics.pose().pushPose();
             int j1 = 400;
-            net.neoforged.neoforge.client.event.RenderTooltipEvent.Color colorEvent = net.neoforged.neoforge.client.ClientHooks.onRenderTooltipColor(ItemStack.EMPTY, graphics, l, i1, preEvent.getFont(), pComponents);
+            net.minecraftforge.client.event.RenderTooltipEvent.Color colorEvent = net.minecraftforge.client.ForgeHooksClient.onRenderTooltipColor(ItemStack.EMPTY, graphics, l, i1, preEvent.getFont(), pComponents);
             graphics.drawManaged(() -> TooltipRenderUtil.renderTooltipBackground(graphics, l, i1, i2, j2, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd(), colorEvent.getBorderStart(), colorEvent.getBorderEnd()));
             graphics.pose().translate(0.0F, 0.0F, 400.0F);
             int k1 = i1;

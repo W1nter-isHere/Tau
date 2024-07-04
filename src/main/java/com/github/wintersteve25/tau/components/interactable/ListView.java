@@ -67,16 +67,16 @@ public final class ListView extends DynamicUIComponent implements PrimitiveUICom
     }
 
     @Override
-    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
-        if (scrollOffset >= maxScroll && pScrollY < 0) {
-            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScroll) {
+        if (scrollOffset >= maxScroll && pScroll < 0) {
+            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScroll);
         }
 
-        if (scrollOffset >= 0 && pScrollY > 0) {
-            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
+        if (scrollOffset >= 0 && pScroll > 0) {
+            return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pScroll);
         }
 
-        scrollOffset += pScrollY > 0 ? scrollSensitivity : -scrollSensitivity;
+        scrollOffset += pScroll > 0 ? scrollSensitivity : -scrollSensitivity;
         scrollOffset = clamp(scrollOffset, -maxScroll, 0);
         rebuild();
 
