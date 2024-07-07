@@ -24,3 +24,8 @@
 - Added `TauMenuHolder#openMenu`
 - Removed `TauMenuHolder#newInstance`
 - Added `UIMenu#tick`, `UIMenu#addDataSlots` and `UIMenu#stillValid`
+
+# v2.0.2 Neoforge-1.20.6 Minor Update
+## API Changes
+- Renamed `TauContainerUI` to `TauContainerScreen`
+- Added `UIMenu#createScreen` to add the ability to create child classes of TauContainerUI if need be
