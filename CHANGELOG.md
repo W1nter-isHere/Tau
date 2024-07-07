@@ -22,4 +22,5 @@
 - Renamed `TauMenu` to `UIMenu`
 - Added `TauContainerMenu containerMenu` param to `UIMenu#build`
 - Added `TauMenuHolder#openMenu`
+- Removed `TauMenuHolder#newInstance`
 - Added `UIMenu#tick`, `UIMenu#addDataSlots` and `UIMenu#stillValid`
