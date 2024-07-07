@@ -57,16 +57,20 @@ public interface UIMenu {
     default Theme getTheme() {
         return MinecraftTheme.INSTANCE;
     }
+    
+    default TauContainerScreen createScreen(TauContainerMenu menu, Inventory inv) {
+        return new TauContainerScreen(menu, inv, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme());
+    }
 
     default DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name, FeatureFlagSet featureFlagSet) {
         return register.register(name, () -> IMenuTypeExtension.create((cid, inv, data) -> newMenu(menu, inv, cid, data.readBlockPos())));
     }
 
     default void registerScreen(RegisterMenuScreensEvent event, MenuType<TauContainerMenu> menuType) {
-        event.register(menuType, new MenuScreens.ScreenConstructor<TauContainerMenu, TauContainerUI>() {
+        event.register(menuType, new MenuScreens.ScreenConstructor<TauContainerMenu, TauContainerScreen>() {
             @Override
-            public TauContainerUI create(TauContainerMenu pMenu, Inventory pInventory, Component pTitle) {
-                return new TauContainerUI(pMenu, pInventory, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme());
+            public TauContainerScreen create(TauContainerMenu pMenu, Inventory pInventory, Component pTitle) {
+                return createScreen(pMenu, pInventory);
             }
         });
     }

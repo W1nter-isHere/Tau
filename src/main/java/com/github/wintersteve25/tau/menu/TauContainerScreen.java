@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> implements MenuAccess<TauContainerMenu> {
+public class TauContainerScreen extends AbstractContainerScreen<TauContainerMenu> implements MenuAccess<TauContainerMenu> {
 
     private final UIMenu uiMenu;
     private final List<Renderable> components;
@@ -29,7 +29,7 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
 
     private boolean built;
 
-    public TauContainerUI(TauContainerMenu pMenu, Inventory pPlayerInventory, UIMenu uiMenu, boolean renderBackground, Theme theme) {
+    public TauContainerScreen(TauContainerMenu pMenu, Inventory pPlayerInventory, UIMenu uiMenu, boolean renderBackground, Theme theme) {
         super(pMenu, pPlayerInventory, Component.empty());
         this.uiMenu = uiMenu;
         this.renderBackground = renderBackground;
