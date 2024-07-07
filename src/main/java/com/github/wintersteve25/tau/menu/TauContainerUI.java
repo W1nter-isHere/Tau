@@ -5,7 +5,6 @@ import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
-import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> implements MenuAccess<TauContainerMenu> {
 
-    private final TauMenu menu;
+    private final UIMenu uiMenu;
     private final List<Renderable> components;
     private final List<Renderable> tooltips;
     private final List<DynamicUIComponent> dynamicUIComponents;
@@ -29,12 +28,10 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
     private final Theme theme;
 
     private boolean built;
-    private int left;
-    private int top;
 
-    public TauContainerUI(TauContainerMenu pMenu, Inventory pPlayerInventory, TauMenu menu, boolean renderBackground, Theme theme) {
+    public TauContainerUI(TauContainerMenu pMenu, Inventory pPlayerInventory, UIMenu uiMenu, boolean renderBackground, Theme theme) {
         super(pMenu, pPlayerInventory, Component.empty());
-        this.menu = menu;
+        this.uiMenu = uiMenu;
         this.renderBackground = renderBackground;
         this.theme = theme;
         this.components = new ArrayList<>();
@@ -44,15 +41,15 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
 
     @Override
     protected void init() {
-        Layout layout = new Layout(menu.getSize().x, menu.getSize().y);
-        left = (width - layout.getWidth()) / 2;
-        top = (height - layout.getHeight()) / 2;
+        Layout layout = new Layout(uiMenu.getSize().x, uiMenu.getSize().y);
+        leftPos = uiMenu.getLeftPos(layout, width, height);
+        topPos = uiMenu.getTopPos(layout, width, height);
 
         components.clear();
         tooltips.clear();
         dynamicUIComponents.clear();
 
-        UIBuilder.build(layout, theme, menu.build(layout, theme), new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children(), new ArrayList<>()));
+        UIBuilder.build(layout, theme, uiMenu.build(layout, theme, getMenu()), new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children(), new ArrayList<>()));
 
         built = true;
     }
@@ -65,7 +62,7 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
 
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
-        poseStack.translate(left, top, 0);
+        poseStack.translate(leftPos, topPos, 0);
 
         for (Renderable component : components) {
             component.render(graphics, pMouseX, pMouseY, pPartialTicks);
@@ -86,6 +83,7 @@ public class TauContainerUI extends AbstractContainerScreen<TauContainerMenu> im
     public void containerTick() {
         if (!built) return;
         UIBuilder.rebuildAndTickDynamicUIComponents(dynamicUIComponents);
+        uiMenu.tick(menu);
     }
 
     @Override

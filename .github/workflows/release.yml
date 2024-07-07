@@ -19,7 +19,7 @@ jobs:
     needs: build
     steps:
       - name: Publish Minecraft Mods
-        uses: Kir-Antipov/mc-publish@v3.2
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: MNBGnhBw
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}

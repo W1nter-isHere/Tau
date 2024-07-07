@@ -16,3 +16,11 @@
 ## Internal Changes
 - `ListView` no longer scrolls per child component and instead scrolls by a fixed amount
 - `DynamicUIComponent` no longer exposes dangerous fields
+
+# v2.0.1 Neoforge-1.20.6 Minor Update
+## API Changes
+- Renamed `TauMenu` to `UIMenu`
+- Added `TauContainerMenu containerMenu` param to `UIMenu#build`
+- Added `TauMenuHolder#openMenu`
+- Removed `TauMenuHolder#newInstance`
+- Added `UIMenu#tick`, `UIMenu#addDataSlots` and `UIMenu#stillValid`
