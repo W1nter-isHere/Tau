@@ -29,3 +29,7 @@
 ## API Changes
 - Renamed `TauContainerUI` to `TauContainerScreen`
 - Added `UIMenu#createScreen` to add the ability to create child classes of TauContainerUI if need be
+
+# v2.0.3 Neoforge-1.20.6 Minor Update
+## Internal Changes
+- Fixed container slots and container related things not being rendered
