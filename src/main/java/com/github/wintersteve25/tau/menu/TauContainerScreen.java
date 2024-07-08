@@ -55,28 +55,24 @@ public class TauContainerScreen extends AbstractContainerScreen<TauContainerMenu
     }
 
     @Override
-    public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTicks) {
+    protected void renderBg(GuiGraphics graphics, float pPartialTick, int pMouseX, int pMouseY) {
         if (renderBackground) {
-            this.renderBackground(graphics, pMouseX, pMouseY, pPartialTicks);
+            renderTransparentBackground(graphics);
         }
-
+        
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
         poseStack.translate(leftPos, topPos, 0);
 
         for (Renderable component : components) {
-            component.render(graphics, pMouseX, pMouseY, pPartialTicks);
+            component.render(graphics, pMouseX, pMouseY, pPartialTick);
         }
 
         for (Renderable tooltip : tooltips) {
-            tooltip.render(graphics, pMouseX, pMouseY, pPartialTicks);
+            tooltip.render(graphics, pMouseX, pMouseY, pPartialTick);
         }
 
         poseStack.popPose();
-    }
-
-    @Override
-    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
     }
 
     @Override
