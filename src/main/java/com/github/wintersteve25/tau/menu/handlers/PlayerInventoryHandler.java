@@ -7,6 +7,9 @@ import net.minecraft.world.inventory.Slot;
 public class PlayerInventoryHandler implements ISlotHandler {
     @Override
     public void setupSync(TauContainerMenu menu, Inventory playerInv, int x, int y) {
+        x += 1;
+        y += 1;
+        
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 menu.addSlot(new Slot(playerInv, j + i * 9 + 9, x + j * 18, y + i * 18));

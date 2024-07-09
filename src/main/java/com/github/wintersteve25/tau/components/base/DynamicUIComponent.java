@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A UI component that can be updated on demand
+ * A UI component that can be rebuilt on demand
  */
 public abstract class DynamicUIComponent implements UIComponent {
 

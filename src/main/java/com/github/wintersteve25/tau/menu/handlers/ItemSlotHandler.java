@@ -17,6 +17,6 @@ public class ItemSlotHandler implements ISlotHandler {
 
     @Override
     public void setupSync(TauContainerMenu menu, Inventory playerInv, int x, int y) {
-        menu.addSlot(new SlotItemHandler(inventory, index, x, y));
+        menu.addSlot(new SlotItemHandler(inventory, index, x + 1, y + 1));
     }
 }

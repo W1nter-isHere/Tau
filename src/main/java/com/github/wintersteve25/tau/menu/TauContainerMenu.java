@@ -7,6 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,6 +65,24 @@ public class TauContainerMenu extends AbstractContainerMenu {
         }
 
         return Optional.of(dataSlots.get(name).dataSlot()::get);
+    }
+
+    @Override
+    public boolean moveItemStackTo(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
+        return super.moveItemStackTo(stack, startIndex, endIndex, reverseDirection);
+    }
+    
+    public BlockEntity getBlockEntity() {
+        return level.getBlockEntity(pos);
+    }
+
+    public <T extends BlockEntity> Optional<T> getBlockEntity(Class<T> t) {
+        BlockEntity e = level.getBlockEntity(pos);
+        if (t.isInstance(e)) {
+            return Optional.of(t.cast(e));
+        }
+        
+        return Optional.empty();
     }
 
     private record IndexedDataSlot(int index, DataSlot dataSlot) {}

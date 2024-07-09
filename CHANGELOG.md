@@ -33,3 +33,12 @@
 # v2.0.3 Neoforge-1.20.6 Minor Update
 ## Internal Changes
 - Fixed container slots and container related things not being rendered
+
+# v2.0.4 Neoforge-1.20.6 Minor Update
+## API Changes
+- Added `Variable` utility class that helps deal with values that change without having to rebuild the component tree
+- `AnimatedTexture` Component now uses the new `Variable` System for the `uvPos` and `uvSize` fields
+- Added `TauContainerMenu#getBlockEntity` helper methods
+
+## Internal Changes
+- Removed label renders in `TauContainerScreen`
