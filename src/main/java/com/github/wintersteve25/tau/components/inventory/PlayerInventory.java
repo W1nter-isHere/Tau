@@ -7,7 +7,6 @@ import com.github.wintersteve25.tau.menu.MenuSlot;
 import com.github.wintersteve25.tau.menu.handlers.PlayerInventoryHandler;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-import net.minecraft.world.inventory.Slot;
 
 public class PlayerInventory implements PrimitiveUIComponent {
 

@@ -9,20 +9,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public class TauMenuHolder {
 
-    private final UIMenu menu;
+    private final Supplier<UIMenu> menu;
     private DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> inner;
 
-    public TauMenuHolder(DeferredRegister<MenuType<?>> register, UIMenu menu, String name, FeatureFlagSet featureFlagSet) {
+    public TauMenuHolder(DeferredRegister<MenuType<?>> register, Supplier<UIMenu> menu, String name, FeatureFlagSet featureFlagSet) {
         this.menu = menu;
-        setup(menu, register, name, featureFlagSet);
+        setup(menu.get(), register, name, featureFlagSet);
     }
 
     private void setup(UIMenu menu, DeferredRegister<MenuType<?>> register, String name, FeatureFlagSet set) {
@@ -34,13 +34,9 @@ public class TauMenuHolder {
     }
 
     public UIMenu getMenu() {
-        return menu;
+        return menu.get();
     }
-
-    public void registerScreen(RegisterMenuScreensEvent event) {
-        menu.registerScreen(event, inner.get());
-    }
-
+    
     public void openMenu(ServerPlayer player, BlockPos pos) {
         player.openMenu(new MenuProvider() {
             @Override
@@ -51,7 +47,7 @@ public class TauMenuHolder {
             @Nullable
             @Override
             public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-                return menu.newMenu(TauMenuHolder.this, pPlayerInventory, pContainerId, pos);
+                return getMenu().newMenu(TauMenuHolder.this, pPlayerInventory, pContainerId, pos);
             }
         }, buf -> {
             buf.writeBlockPos(pos);

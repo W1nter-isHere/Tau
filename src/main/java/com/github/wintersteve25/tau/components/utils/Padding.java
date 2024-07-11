@@ -2,9 +2,6 @@ package com.github.wintersteve25.tau.components.utils;
 
 import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.theme.Theme;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.components.Renderable;
-import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Axis;
@@ -12,8 +9,6 @@ import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.Pad;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-
-import java.util.List;
 
 public final class Padding implements PrimitiveUIComponent {
 

@@ -4,7 +4,6 @@ import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.menu.MenuSlot;
-import com.github.wintersteve25.tau.menu.handlers.ISlotHandler;
 import com.github.wintersteve25.tau.menu.handlers.ItemSlotHandler;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;

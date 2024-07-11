@@ -12,6 +12,7 @@ import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.layout.LayoutSetting;
 import com.github.wintersteve25.tau.renderer.ScreenUIRenderer;
 import com.github.wintersteve25.tau.theme.Theme;
+import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import com.github.wintersteve25.tau.utils.Size;
 import net.minecraft.client.Minecraft;
 
@@ -77,6 +78,7 @@ public class TestAll implements UIComponent {
         @Override
         public UIComponent build(Layout layout, Theme theme) {
             return new Stack(
+                    FlexSizeBehaviour.MAX,
                     screen,
                     new Align.Builder()
                             .withHorizontal(LayoutSetting.START)

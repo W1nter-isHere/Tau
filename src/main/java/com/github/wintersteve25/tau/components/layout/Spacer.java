@@ -1,15 +1,10 @@
 package com.github.wintersteve25.tau.components.layout;
 
 import com.github.wintersteve25.tau.build.BuildContext;
-import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.components.Renderable;
-
-import java.util.List;
 
 public final class Spacer implements PrimitiveUIComponent {
 

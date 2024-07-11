@@ -23,7 +23,7 @@ public class TauContainerMenu extends AbstractContainerMenu {
     public final BlockPos pos;
 
     private final Map<String, IndexedDataSlot> dataSlots;
-    private final TauMenuHolder holder;
+    private final UIMenu menu;
 
     public TauContainerMenu(TauMenuHolder holder, Inventory playerInventory, int pContainerId, BlockPos pos) {
         super(holder.get(), pContainerId);
@@ -31,17 +31,17 @@ public class TauContainerMenu extends AbstractContainerMenu {
         this.level = playerInventory.player.level();
         this.pos = pos;
         this.dataSlots = new HashMap<>();
-        this.holder = holder;
+        this.menu = holder.getMenu();
     }
 
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
-        return holder.getMenu().quickMoveStack(this, pPlayer, pIndex);
+        return menu.quickMoveStack(this, pPlayer, pIndex);
     }
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return holder.getMenu().stillValid(this, pPlayer);
+        return menu.stillValid(this, pPlayer);
     }
 
     public @NotNull Slot addSlot(@NotNull Slot pSlot) {

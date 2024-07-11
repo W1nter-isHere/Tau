@@ -2,19 +2,16 @@ package com.github.wintersteve25.tau.components.interactable;
 
 import com.github.wintersteve25.tau.build.BuildContext;
 import com.github.wintersteve25.tau.build.UIBuilder;
-import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Axis;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
+import com.github.wintersteve25.tau.utils.ClientSoundHelper;
 import com.github.wintersteve25.tau.utils.InteractableState;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.sounds.SoundEvents;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public final class Button implements PrimitiveUIComponent, GuiEventListener {
@@ -51,7 +48,7 @@ public final class Button implements PrimitiveUIComponent, GuiEventListener {
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (onPress != null && isHovered((int) pMouseX, (int) pMouseY)) {
             onPress.accept(pButton);
-            playSound(SoundEvents.UI_BUTTON_CLICK.value());
+            ClientSoundHelper.playButtonClick();
             return true;
         }
 

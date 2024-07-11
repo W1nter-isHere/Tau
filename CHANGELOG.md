@@ -34,11 +34,19 @@
 ## Internal Changes
 - Fixed container slots and container related things not being rendered
 
-# v2.0.4 Neoforge-1.20.6 Minor Update
+# v2.1.0 Neoforge-1.20.6 Major Update
+## Bug Fixes
+- UIMenus no longer crash when used in a server
+
 ## API Changes
 - Added `Variable` utility class that helps deal with values that change without having to rebuild the component tree
 - `AnimatedTexture` Component now uses the new `Variable` System for the `uvPos` and `uvSize` fields
 - Added `TauContainerMenu#getBlockEntity` helper methods
+- Removed `TauMenuHolder#registerScreen`
+- Added `TauMenuHelper#registerMenuScreen`
+- Moved sound playing methods from `UIComponent` to `ClientSoundHelper`
+- Added `UIMenu#getSlots` that you must override if you want to have item slots in the UI
 
 ## Internal Changes
 - Removed label renders in `TauContainerScreen`
+- When creating the container on the server side, it no longer builds the UI, instead calls the getSlots function to create the slots 

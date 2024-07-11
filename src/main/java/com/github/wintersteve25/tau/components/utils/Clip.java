@@ -5,21 +5,16 @@ import com.github.wintersteve25.tau.theme.Theme;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.events.ContainerEventHandler;
-import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.Renderable;
-import com.github.wintersteve25.tau.components.base.DynamicUIComponent;
 import com.github.wintersteve25.tau.components.base.PrimitiveUIComponent;
 import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.utils.Size;
 import com.github.wintersteve25.tau.build.UIBuilder;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public final class Clip implements PrimitiveUIComponent {
 
