@@ -22,11 +22,18 @@ public class Variable<T> {
     }
 
     public void setValue(T value) {
-        if (this.value == value || this.value.equals(value)) return;
+        if (this.value == null && value == null) {
+            return;
+        }
         
+        if (this.value != null) {
+            if (this.value == value) return;
+            if (this.value.equals(value)) return;
+        }
+
         this.value = value;
         changedSince = true;
-        
+
         for (Consumer<T> listener : listeners) {
             listener.accept(value);
         }

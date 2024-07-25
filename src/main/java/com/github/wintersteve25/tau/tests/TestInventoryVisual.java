@@ -9,12 +9,13 @@ import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.FlexSizeBehaviour;
 import com.github.wintersteve25.tau.utils.Pad;
+import com.github.wintersteve25.tau.utils.Variable;
 
 public class TestInventoryVisual implements UIComponent {
     @Override
     public UIComponent build(Layout layout, Theme theme) {
         return new Center(new Container.Builder()
                 .withSizeBehaviour(FlexSizeBehaviour.MIN)
-                .withChild(new Padding(new Pad.Builder().all(10).build(), new PlayerInventory())));
+                .withChild(new Padding(new Pad.Builder().all(10).build(), new PlayerInventory(new Variable<>(true)))));
     }
 }

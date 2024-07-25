@@ -46,6 +46,8 @@
 - Added `TauMenuHelper#registerMenuScreen`
 - Moved sound playing methods from `UIComponent` to `ClientSoundHelper`
 - Added `UIMenu#getSlots` that you must override if you want to have item slots in the UI
+- Added `addDataSlot` overload in `TauContainerMenu` to take in a getter and setter instead of `DataSlot`
+- Added `createMenu` method to `UIMenu` to add the ability to create child classes of `TauContainerMenu`
 
 ## Internal Changes
 - Removed label renders in `TauContainerScreen`

@@ -7,6 +7,7 @@ import com.github.wintersteve25.tau.theme.MinecraftTheme;
 import com.github.wintersteve25.tau.theme.Theme;
 import com.github.wintersteve25.tau.utils.SimpleVec2i;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -16,13 +17,14 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface UIMenu {
     UIComponent build(Layout layout, Theme theme, TauContainerMenu containerMenu);
 
     SimpleVec2i getSize();
+    
+    Component getTitle();
     
     default int getTopPos(Layout layout, int width, int height) {
         return (height - layout.getHeight()) / 2;
@@ -58,8 +60,12 @@ public interface UIMenu {
         return MinecraftTheme.INSTANCE;
     }
     
-    default TauContainerScreen createScreen(TauContainerMenu menu, Inventory inv) {
-        return new TauContainerScreen(menu, inv, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme());
+    default TauContainerScreen createScreen(TauContainerMenu menu, Inventory inv, Component title) {
+        return new TauContainerScreen(menu, inv, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme(), title);
+    }
+    
+    default TauContainerMenu createMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {
+        return new TauContainerMenu(menuHolder, playerInv, containerId, pos);
     }
 
     default DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name, FeatureFlagSet featureFlagSet) {
@@ -71,7 +77,7 @@ public interface UIMenu {
         Layout layout = new Layout(size.x, size.y);
         List<? extends MenuSlot<? extends ISlotHandler>> s;
 
-        TauContainerMenu menu = new TauContainerMenu(menuHolder, playerInv, containerId, pos);
+        TauContainerMenu menu = createMenu(menuHolder, playerInv, containerId, pos);
         if (menu.level.isClientSide()) {
             s = TauMenuHelper.buildContainerOnClient(this, layout, getTheme(), menu);
         } else {

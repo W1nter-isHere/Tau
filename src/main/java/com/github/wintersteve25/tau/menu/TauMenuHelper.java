@@ -18,7 +18,7 @@ public class TauMenuHelper {
         event.register(holder.get(), new MenuScreens.ScreenConstructor<TauContainerMenu, TauContainerScreen>() {
             @Override
             public TauContainerScreen create(TauContainerMenu pMenu, Inventory pInventory, Component pTitle) {
-                return holder.getMenu().createScreen(pMenu, pInventory);
+                return holder.getMenu().createScreen(pMenu, pInventory, pTitle);
             }
         });
     }

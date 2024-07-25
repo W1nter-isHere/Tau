@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -40,8 +41,8 @@ public class TauMenuHolder {
     public void openMenu(ServerPlayer player, BlockPos pos) {
         player.openMenu(new MenuProvider() {
             @Override
-            public Component getDisplayName() {
-                return Component.empty();
+            public @NotNull Component getDisplayName() {
+                return getMenu().getTitle();
             }
 
             @Nullable

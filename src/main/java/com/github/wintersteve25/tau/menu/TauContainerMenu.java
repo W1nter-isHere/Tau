@@ -2,6 +2,7 @@ package com.github.wintersteve25.tau.menu;
 
 import com.github.wintersteve25.tau.Tau;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class TauContainerMenu extends AbstractContainerMenu {
@@ -56,6 +58,20 @@ public class TauContainerMenu extends AbstractContainerMenu {
 
         dataSlots.put(name, new IndexedDataSlot(dataSlots.size(), slot));
         addDataSlot(slot);
+    }
+    
+    public void addDataSlot(String name, Supplier<Integer> getter, Consumer<Integer> setter) {
+        addDataSlot(name, new DataSlot() {
+            @Override
+            public int get() {
+                return getter.get();
+            }
+
+            @Override
+            public void set(int value) {
+                setter.accept(value);
+            }
+        });
     }
 
     public Optional<Supplier<Integer>> getGetterForDataSlot(String name) {
