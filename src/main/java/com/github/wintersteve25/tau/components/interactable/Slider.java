@@ -4,7 +4,11 @@ import com.github.wintersteve25.tau.components.base.UIComponent;
 import com.github.wintersteve25.tau.components.utils.WidgetWrapper;
 import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 
 import java.util.function.Consumer;
@@ -20,9 +24,10 @@ public final class Slider implements UIComponent {
     private final double maximum;
     private final Runnable onPress;
     private final Consumer<Double> onValueChanged;
+    private final boolean drawString;
 
     public Slider(Component prefix, Component suffix, float stepSize, int decimalPlaces, double value, double minimum,
-                  double maximum, Runnable onPress, Consumer<Double> onValueChanged) {
+                  double maximum, Runnable onPress, Consumer<Double> onValueChanged, boolean drawString) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.stepSize = stepSize;
@@ -32,31 +37,61 @@ public final class Slider implements UIComponent {
         this.maximum = maximum;
         this.onPress = onPress;
         this.onValueChanged = onValueChanged;
+        this.drawString = drawString;
     }
 
     @Override
     public UIComponent build(Layout layout, Theme theme) {
-        return new WidgetWrapper(new SliderWidget(prefix, suffix, stepSize, decimalPlaces, minimum, maximum, value, onPress, onValueChanged));
+        return new WidgetWrapper(new SliderWidget(prefix, suffix, stepSize, decimalPlaces, minimum, maximum, value, onPress, onValueChanged, theme, drawString));
     }
 
     private static final class SliderWidget extends ExtendedSlider {
         private final Runnable onPress;
         private final Consumer<Double> onValueChange;
+        private final Theme theme;
 
-        public SliderWidget(Component prefix, Component suffix, float stepSize, int decimalAmounts, double minVal, double maxVal, double currentVal, Runnable onPress, Consumer<Double> onValueChange) {
-            super(0, 0, 0, 0, prefix, suffix, minVal, maxVal, currentVal, stepSize, decimalAmounts, true);
+        public SliderWidget(Component prefix, Component suffix, float stepSize, int decimalAmounts, double minVal, double maxVal, double currentVal, Runnable onPress, Consumer<Double> onValueChange, Theme theme, boolean drawString) {
+            super(0, 0, 0, 0, prefix, suffix, minVal, maxVal, currentVal, stepSize, decimalAmounts, drawString);
             this.onPress = onPress;
             this.onValueChange = onValueChange;
+            this.theme = theme;
         }
 
         @Override
         public void onClick(double mouseX, double mouseY) {
+            super.onClick(mouseX, mouseY);
             if (onPress != null) onPress.run();
         }
 
         @Override
         protected void applyValue() {
             if (onValueChange != null) onValueChange.accept(getValue());
+        }
+
+        @Override
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+            Minecraft minecraft = Minecraft.getInstance();
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.enableDepthTest();
+            theme.drawSlider(
+                    this.getSprite(),
+                    this.getHandleSprite(),
+                    value,
+                    guiGraphics,
+                    getX(),
+                    getY(),
+                    getWidth(),
+                    getHeight(),
+                    partialTick,
+                    mouseX, 
+                    mouseY,
+                    isHoveredOrFocused()
+            );
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            int i = this.active ? 16777215 : 10526880;
+            this.renderScrollingString(guiGraphics, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
 
@@ -70,6 +105,7 @@ public final class Slider implements UIComponent {
         private double maximum = 1;
         private Runnable onPress;
         private Consumer<Double> onValueChanged;
+        private boolean drawString = true;
 
         public Builder() {
         }
@@ -113,6 +149,11 @@ public final class Slider implements UIComponent {
             this.onPress = onPress;
             return this;
         }
+        
+        public Builder dontDrawString() {
+            drawString = false;
+            return this;
+        }
 
         public Builder withOnValueChanged(Consumer<Double> onValueChanged) {
             this.onValueChanged = onValueChanged;
@@ -129,7 +170,8 @@ public final class Slider implements UIComponent {
                     minimum,
                     maximum,
                     onPress,
-                    onValueChanged
+                    onValueChanged,
+                    drawString
             );
         }
 

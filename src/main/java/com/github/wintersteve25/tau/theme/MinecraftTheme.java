@@ -22,7 +22,7 @@ public class MinecraftTheme implements Theme {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Tau.MOD_ID, "textures/gui/container.png");
     private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation(Tau.MOD_ID, "textures/gui/slot.png");
     private static final Color TEXT = new Color(0xFFE8E8E8);
-
+    
     @Override
     public void drawButton(GuiGraphics graphics, int x, int y, int width, int height, float partialTicks, int mouseX, int mouseY, InteractableState state) {
         graphics.blitWithBorder(TEXTURE, x, y, 0, 166 + state.getNumber() * 20, width, height, 200, 20, 2, 3, 2, 2);
@@ -35,6 +35,12 @@ public class MinecraftTheme implements Theme {
 
     @Override
     public void drawScrollbar(GuiGraphics graphics, int x, int y, int width, int height, float partialTicks, int mouseX, int mouseY) {
+    }
+
+    @Override
+    public void drawSlider(ResourceLocation defaultBackground, ResourceLocation defaultHandle, double sliderValue, GuiGraphics graphics, int x, int y, int width, int height, float partialTicks, int mouseX, int mouseY, boolean hoveredOrFocused) {
+        graphics.blitSprite(defaultBackground, x, y, width, height);
+        graphics.blitSprite(defaultHandle, x + (int) (sliderValue * (double) (width - 8)), y, 8, height);
     }
 
     @Override

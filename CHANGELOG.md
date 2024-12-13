@@ -48,6 +48,10 @@
 - Added `UIMenu#getSlots` that you must override if you want to have item slots in the UI
 - Added `addDataSlot` overload in `TauContainerMenu` to take in a getter and setter instead of `DataSlot`
 - Added `createMenu` method to `UIMenu` to add the ability to create child classes of `TauContainerMenu`
+- Added `onClose` method to `UIMenu`
+- `UIMenu` is now an abstract class instead of an interface
+- `UIMenu` can now be rebuilt by calling `rebuild()` - Note, rebuilding does not disable/enable item slots, check example to see how to create dynamic slots
+- Added `drawSlider` to `Theme`
 
 ## Internal Changes
 - Removed label renders in `TauContainerScreen`

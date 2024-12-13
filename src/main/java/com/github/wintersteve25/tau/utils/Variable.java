@@ -3,6 +3,7 @@ package com.github.wintersteve25.tau.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Variable<T> {
     
@@ -49,5 +50,15 @@ public class Variable<T> {
     
     public boolean hasChangedSinceLastGet() {
         return changedSince;
+    }
+    
+    public Variable<T> map(Function<T, T> mapper) {
+        Variable<T> variable = new Variable<>(mapper.apply(value));
+        
+        this.addListener(v -> {
+            variable.setValue(mapper.apply(v));
+        });
+        
+        return variable;
     }
 }

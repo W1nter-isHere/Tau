@@ -19,60 +19,74 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
 
-public interface UIMenu {
-    UIComponent build(Layout layout, Theme theme, TauContainerMenu containerMenu);
+public abstract class UIMenu {
+    
+    private boolean needsRebuild;
+    
+    public abstract UIComponent build(Layout layout, Theme theme, TauContainerMenu containerMenu);
 
-    SimpleVec2i getSize();
+    public abstract SimpleVec2i getSize();
     
-    Component getTitle();
+    public abstract Component getTitle();
+
+    public void onClose() {
+    }
     
-    default int getTopPos(Layout layout, int width, int height) {
+    protected void rebuild() {
+        needsRebuild = true;
+    }
+    
+    public boolean isNeedsRebuild() {
+        return needsRebuild;
+    }
+    
+    public int getTopPos(Layout layout, int width, int height) {
         return (height - layout.getHeight()) / 2;
     }
 
-    default int getLeftPos(Layout layout, int width, int height) {
+    public int getLeftPos(Layout layout, int width, int height) {
         return (width - layout.getWidth()) / 2;
     }
 
-    default void tick(TauContainerMenu menu) {
+    public void tick(TauContainerMenu menu) {
     }
 
-    default void addDataSlots(TauContainerMenu menu) {
+    protected void addDataSlots(TauContainerMenu menu) {
     }
 
-    default List<? extends ISlotHandler> getSlots(TauContainerMenu menu) {
+    public List<? extends ISlotHandler> getSlots(TauContainerMenu menu) {
         return List.of();
     }
 
-    default ItemStack quickMoveStack(TauContainerMenu menu, Player player, int index) {
+    public ItemStack quickMoveStack(TauContainerMenu menu, Player player, int index) {
         return null;
     }
 
-    default boolean stillValid(TauContainerMenu menu, Player player) {
+    public boolean stillValid(TauContainerMenu menu, Player player) {
         return true;
     }
 
-    default boolean shouldRenderBackground() {
+    public boolean shouldRenderBackground() {
         return true;
     }
 
-    default Theme getTheme() {
+    public Theme getTheme() {
         return MinecraftTheme.INSTANCE;
     }
     
-    default TauContainerScreen createScreen(TauContainerMenu menu, Inventory inv, Component title) {
+    public TauContainerScreen createScreen(TauContainerMenu menu, Inventory inv, Component title) {
         return new TauContainerScreen(menu, inv, UIMenu.this, UIMenu.this.shouldRenderBackground(), UIMenu.this.getTheme(), title);
     }
     
-    default TauContainerMenu createMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {
+    protected TauContainerMenu createMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {
         return new TauContainerMenu(menuHolder, playerInv, containerId, pos);
     }
 
-    default DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name, FeatureFlagSet featureFlagSet) {
+    public DeferredHolder<MenuType<?>, MenuType<TauContainerMenu>> registerMenuType(DeferredRegister<MenuType<?>> register, TauMenuHolder menu, String name, FeatureFlagSet featureFlagSet) {
         return register.register(name, () -> IMenuTypeExtension.create((cid, inv, data) -> newMenu(menu, inv, cid, data.readBlockPos())));
     }
 
-    default TauContainerMenu newMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {
+    public TauContainerMenu newMenu(TauMenuHolder menuHolder, Inventory playerInv, int containerId, BlockPos pos) {
         SimpleVec2i size = getSize();
         Layout layout = new Layout(size.x, size.y);
         List<? extends MenuSlot<? extends ISlotHandler>> s;

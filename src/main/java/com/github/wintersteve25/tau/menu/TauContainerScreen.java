@@ -8,6 +8,7 @@ import com.github.wintersteve25.tau.layout.Layout;
 import com.github.wintersteve25.tau.theme.Theme;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -51,6 +52,7 @@ public class TauContainerScreen extends AbstractContainerScreen<TauContainerMenu
         components.clear();
         tooltips.clear();
         dynamicUIComponents.clear();
+        children().clear();
 
         UIBuilder.build(layout, theme, uiMenu.build(layout, theme, getMenu()), new BuildContext(components, tooltips, dynamicUIComponents, (List<GuiEventListener>) children(), new ArrayList<>()));
         
@@ -88,6 +90,7 @@ public class TauContainerScreen extends AbstractContainerScreen<TauContainerMenu
     @Override
     public void containerTick() {
         if (!built) return;
+        if (uiMenu.isNeedsRebuild()) init();
         UIBuilder.rebuildAndTickDynamicUIComponents(dynamicUIComponents);
         uiMenu.tick(menu);
     }
@@ -97,7 +100,23 @@ public class TauContainerScreen extends AbstractContainerScreen<TauContainerMenu
         for (DynamicUIComponent dynamicUIComponent : dynamicUIComponents) {
             dynamicUIComponent.destroy();
         }
-
+        
+        uiMenu.onClose();
         super.onClose();
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        if (childDrag(mouseX, mouseY, button, dragX, dragY)) {
+            return true;
+        }
+
+        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
+    
+    private boolean childDrag(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        return this.getFocused() != null && this.isDragging() && button == 0
+                ? this.getFocused().mouseDragged(mouseX, mouseY, button, dragX, dragY)
+                : false;
     }
 }
